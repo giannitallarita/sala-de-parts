@@ -136,6 +136,32 @@ h1{
 .score{font-family:var(--f-mono); font-size:12px; color:var(--ink3); white-space:nowrap}
 .score b{color:var(--ink); font-weight:600}
 
+/* ---------- streak ---------- */
+.streak{
+  display:flex; align-items:stretch; gap:0; margin-bottom:14px;
+  border:1px solid var(--line); border-radius:3px; overflow:hidden; background:var(--panel);
+}
+.stkn{padding:9px 13px; display:flex; flex-direction:column; justify-content:center; min-width:74px}
+.stkn.r{border-left:1px solid var(--line); align-items:flex-end; text-align:right}
+.stkv{font-family:var(--f-mono); font-weight:600; font-size:21px; line-height:1; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.stkv.hot{color:var(--ok)}
+.stkl{font-family:var(--f-disp); font-size:9px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--ink3); margin-top:4px}
+.toco{flex:1; min-width:0; border-left:1px solid var(--line); background:var(--sunk); position:relative}
+.toco svg{display:block; width:100%; height:100%}
+.toco path{fill:none; stroke:var(--ok); stroke-width:2.1; stroke-linecap:round; stroke-linejoin:round;
+  vector-effect:non-scaling-stroke; transition:stroke .3s}
+.toco.flat path{stroke:var(--accent)}
+.tier{
+  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+  font-size:12px; color:var(--ink3); margin:-6px 0 16px; padding:0 2px;
+}
+.tier b{
+  font-family:var(--f-disp); font-size:10px; font-weight:700; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink);
+}
+.tier .up{color:var(--ink3)}
+.tier .up em{font-style:normal; font-family:var(--f-mono); color:var(--ink2); font-weight:600}
+
 /* ---------- card ---------- */
 .card{
   background:var(--panel); border:1px solid var(--line); border-radius:4px;
@@ -301,7 +327,11 @@ h1{
   .sub, .disclaim{display:none}
   .rail{margin-top:14px; gap:4px}
   .seg{padding:7px 6px 6px}
-  .controls{margin-bottom:16px}
+  .controls{margin-bottom:14px}
+  .streak{margin-bottom:12px}
+  .stkn{min-width:60px; padding:8px 10px}
+  .stkv{font-size:18px}
+  .tier{font-size:11.5px; margin:-4px 0 14px}
   .card{padding:16px 14px}
   .q{font-size:17.5px}
   .opt{padding:12px; min-height:50px; align-items:center}
@@ -348,6 +378,8 @@ body{-webkit-text-size-adjust:100%; overscroll-behavior-y:contain}
       <span class="spacer"></span>
       <span class="score mono" id="score"></span>
     </div>
+    <div class="streak" id="streak"></div>
+    <p class="tier" id="tier"></p>
   </header>
   <main id="stage" aria-live="polite"></main>
 </div>
@@ -1309,54 +1341,120 @@ const REF = [
 ];
 
 /* ============ STATE ============ */
-const KEY = "parto.progress.v1";
-const MASTERY = 2;
+const KEY = "parto.progress.v2";
+const OLDKEY = "parto.progress.v1";
+const BOXES = 4;                       // box 2+ counts as mastered; 3 and 4 are long-term review
+const SPACING = [4, 10, 25, 60, 150];  // questions to wait, indexed by box
+const MISS_GAP = 6;                    // a missed question comes back this far on
+const TIERS = [null, "Foundations", "Procedure", "Judgment"];
+
 let stats = {};
+let tick = 0;
+let streak = 0, best = 0;
 let saveTimer = null;
 
 let scope = "all";        // "all" | module key
-let filter = null;        // null | "crit" | "weak"
-let queue = [];
+let filter = null;        // null | "crit" | "contested" | "weak"
 let cur = null, curOpts = null, answered = false, wasRight = false;
 let sessionSeen = 0, sessionRight = 0;
 
-BANK.forEach((q, i) => { q.id = "q" + i; });
+BANK.forEach((q, i) => {
+  q.id = "q" + i;
+  // 1 foundations (the red flags)  2 procedure  3 judgment (contested + the intervention calls)
+  q.d = q.crit ? 1 : ((q.ev && q.ev.c) || q.m === "m4") ? 3 : 2;
+});
 
-function st(id){ return stats[id] || (stats[id] = {s:0, seen:0, miss:0}); }
-function mastered(id){ return st(id).s >= MASTERY; }
+function st(id){ return stats[id] || (stats[id] = {box:0, next:0, seen:0, miss:0}); }
+function mastered(id){ return st(id).box >= 2; }
 
 function load(){
   let d = null;
   try { d = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
-  if (d && typeof d === "object") stats = d;
+  if (d && d.stats){ stats = d.stats; best = d.best || 0; return; }
+  // migrate the old two-in-a-row schema
+  let o = null;
+  try { o = JSON.parse(localStorage.getItem(OLDKEY) || "null"); } catch(e){}
+  if (o && typeof o === "object"){
+    Object.keys(o).forEach(k => {
+      const v = o[k] || {};
+      stats[k] = {box: (v.s >= 2 ? 3 : (v.s || 0)), next: 0, seen: v.seen || 0, miss: v.miss || 0};
+    });
+  }
 }
 function save(){
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(stats)); } catch(e){}
+    try { localStorage.setItem(KEY, JSON.stringify({stats: stats, best: best})); } catch(e){}
   }, 250);
 }
 
-function pool(){
+/* ---- which questions are in play ---- */
+function pool(tier){
   let p = BANK.filter(q => scope === "all" || q.m === scope);
   if (filter === "crit") p = p.filter(q => q.crit);
   if (filter === "contested") p = p.filter(q => q.ev && q.ev.c);
   if (filter === "weak") p = p.filter(q => st(q.id).miss > 0 && !mastered(q.id));
+  if (tier) p = p.filter(q => q.d === tier);
   return p;
 }
-function build(){
-  const p = pool().filter(q => !mastered(q.id));
-  for (let i = p.length - 1; i > 0; i--){ const j = (Math.random() * (i + 1)) | 0; [p[i], p[j]] = [p[j], p[i]]; }
-  p.sort((a, b) => st(b.id).miss - st(a.id).miss || 0);
-  queue = p;
+function tierDone(t){
+  const p = pool(t);
+  return p.length > 0 && p.every(q => mastered(q.id));
+}
+/* The streak sets the difficulty the drill AIMS at. It is a weighting, not a gate:
+   every question stays reachable at every streak, which is what keeps the rotation
+   wide instead of grinding the same small tier over and over. */
+function targetTier(){
+  if (filter) return 2;
+  return streak >= 8 ? 3 : streak >= 4 ? 2 : 1;
+}
+function toNextTier(){
+  if (filter || streak >= 8) return null;
+  const need = streak >= 4 ? 8 : 4;
+  return {n: need - streak, name: TIERS[streak >= 4 ? 3 : 2]};
+}
+
+/* ---- pick the next question ---- */
+function choose(){
+  const p = pool();
+  if (!p.length) return null;
+  // finished: everything mastered and nothing due for review yet
+  if (p.every(q => mastered(q.id)) && !p.some(q => st(q.id).next <= tick)) return null;
+  const target = targetTier();
+
+  // a mastered question still returns once its spacing is up, so retention is tested
+  let live = p.filter(q => !mastered(q.id) || st(q.id).next <= tick);
+  if (!live.length) live = p;
+
+  let due = live.filter(q => st(q.id).next <= tick);
+  if (!due.length){
+    // nothing is due yet, so take whatever comes due soonest rather than anything at all
+    let soonest = Infinity;
+    live.forEach(q => { const n = st(q.id).next; if (n < soonest) soonest = n; });
+    due = live.filter(q => st(q.id).next <= soonest + 2);
+  }
+  if (due.length > 1 && cur){                       // never the same question twice running
+    const w = due.filter(q => q !== cur);
+    if (w.length) due = w;
+  }
+
+  let bestScore = -Infinity, winner = null;
+  due.forEach(q => {
+    const a = st(q.id);
+    const score = -a.box * 10                       // weakest knowledge first
+                - Math.abs(q.d - target) * 5        // lean toward the streak's difficulty band
+                + (a.miss > 0 ? 5 : 0)              // things you have missed before
+                + Math.random() * 4;                // keep the order unpredictable
+    if (score > bestScore){ bestScore = score; winner = q; }
+  });
+  return winner;
 }
 
 /* ============ RENDER ============ */
 const stage = document.getElementById("stage");
 
 function render(){
-  renderRail();
-  renderScore();
+  renderRail(); renderStreak(); renderScore();
   if (!cur){ next(); return; }
   drawCard();
 }
@@ -1380,10 +1478,43 @@ function renderRail(){
   });
 }
 
+/* the streak drawn as a tocograph trace: one contraction per correct answer */
+function tocoPath(n, flat){
+  const W = 240, H = 44, base = H - 7, top = 7, slots = 12;
+  if (flat || n <= 0) return "M0 " + base + " H" + W;
+  const vis = Math.min(n, slots), sp = W / slots;
+  let d = "M0 " + base;
+  for (let i = 0; i < vis; i++){
+    const x0 = i * sp, xm = x0 + sp / 2, x1 = x0 + sp;
+    d += " C" + (x0 + sp * .3) + " " + base + " " + (xm - sp * .2) + " " + top + " " + xm + " " + top;
+    d += " C" + (xm + sp * .2) + " " + top + " " + (x1 - sp * .3) + " " + base + " " + x1 + " " + base;
+  }
+  if (vis < slots) d += " H" + W;
+  return d;
+}
+
+function renderStreak(){
+  const flat = answered && !wasRight;
+  document.getElementById("streak").innerHTML =
+    '<div class="stkn"><span class="stkv' + (streak >= 3 ? ' hot' : '') + '">' + streak + '</span>' +
+      '<span class="stkl">Streak</span></div>' +
+    '<div class="toco' + (flat ? ' flat' : '') + '">' +
+      '<svg viewBox="0 0 240 44" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path d="' + tocoPath(streak, flat) + '"/>' +
+      '</svg></div>' +
+    '<div class="stkn r"><span class="stkv">' + best + '</span><span class="stkl">Best</span></div>';
+
+  const cap = targetTier(), up = toNextTier();
+  document.getElementById("tier").innerHTML =
+    '<b>Tier ' + cap + ' \u00b7 ' + TIERS[cap] + '</b>' +
+    (up ? '<span class="up">\u2014 <em>' + up.n + '</em> more in a row to reach ' + up.name + '</span>'
+        : '<span class="up">\u2014 hardest tier open</span>');
+}
+
 function renderScore(){
   const total = BANK.length, done = BANK.filter(q => mastered(q.id)).length;
   document.getElementById("score").innerHTML =
-    (sessionSeen ? '<b>' + sessionRight + '</b>/' + sessionSeen + ' this run &nbsp;·&nbsp; ' : '') +
+    (sessionSeen ? '<b>' + sessionRight + '</b>/' + sessionSeen + ' this run &nbsp;\u00b7&nbsp; ' : '') +
     '<b>' + done + '</b>/' + total + ' mastered';
   document.getElementById("critBtn").setAttribute("aria-pressed", filter === "crit");
   document.getElementById("contestedBtn").setAttribute("aria-pressed", filter === "contested");
@@ -1391,29 +1522,29 @@ function renderScore(){
 }
 
 function next(){
-  if (!queue.length) build();
-  if (!queue.length){ drawDone(); return; }
-  cur = queue.shift();
+  const q = choose();
+  if (!q){ drawDone(); return; }
+  cur = q;
   answered = false;
-  const s = st(cur.id);
-  const stem = cur.qs ? cur.qs[s.seen % cur.qs.length] : cur.q;
+  const a = st(cur.id);
+  cur._stem = cur.qs ? cur.qs[a.seen % cur.qs.length] : cur.q;
   curOpts = cur.o.map((o, i) => ({t:o.t, ok:i === 0}));
   for (let i = curOpts.length - 1; i > 0; i--){ const j = (Math.random() * (i + 1)) | 0; [curOpts[i], curOpts[j]] = [curOpts[j], curOpts[i]]; }
-  cur._stem = stem;
+  renderStreak();
   drawCard();
 }
 
 function drawCard(){
   const m = MODULES.find(x => x.k === cur.m);
-  const s = st(cur.id);
-  const left = queue.length + 1;
+  const a = st(cur.id);
+  const left = pool().filter(q => !mastered(q.id)).length;
   stage.innerHTML =
   '<article class="card ' + cur.m + '">' +
     '<div class="cardtop">' +
-      '<span class="eyebrow">' + m.ord + ' · ' + m.ca + '</span>' +
+      '<span class="eyebrow">' + m.ord + ' \u00b7 ' + m.ca + '</span>' +
       (cur.crit ? '<span class="tag">Red flag</span>' : '') +
-      (s.miss > 0 && !mastered(cur.id) ? '<span class="tag rep">Missed before</span>' : '') +
-      '<span class="qno mono">' + left + ' left</span>' +
+      (a.miss > 0 && !mastered(cur.id) ? '<span class="tag rep">Missed before</span>' : '') +
+      '<span class="qno mono">' + left + ' to master</span>' +
     '</div>' +
     '<h2 class="q">' + cur._stem + '</h2>' +
     '<div class="opts" id="opts">' +
@@ -1430,10 +1561,20 @@ function pick(i){
   if (answered) return;
   answered = true;
   wasRight = curOpts[i].ok;
-  const s = st(cur.id);
-  s.seen++;
-  if (wasRight){ s.s++; sessionRight++; } else { s.s = 0; s.miss++; }
-  sessionSeen++;
+  const a = st(cur.id);
+  const capBefore = targetTier();
+  a.seen++; tick++; sessionSeen++;
+
+  if (wasRight){
+    a.box = Math.min(a.box + 1, BOXES);
+    a.next = tick + SPACING[a.box];
+    streak++; if (streak > best) best = streak;
+    sessionRight++;
+  } else {
+    a.box = 0; a.miss++;
+    a.next = tick + MISS_GAP;
+    streak = 0;
+  }
   save();
 
   document.querySelectorAll(".opt").forEach((b, j) => {
@@ -1443,80 +1584,84 @@ function pick(i){
     else b.classList.add("dim");
   });
 
-  const m2 = mastered(cur.id);
+  const unlocked = wasRight && targetTier() > capBefore;
+  let verdict;
+  if (!wasRight) verdict = streakLost(a);
+  else if (unlocked) verdict = "Correct \u2014 now drilling Tier " + targetTier() + ": " + TIERS[targetTier()];
+  else if (mastered(cur.id)) verdict = "Correct \u2014 mastered";
+  else verdict = "Correct \u2014 streak " + streak;
+
   document.getElementById("fb").innerHTML =
     '<div class="fb">' +
-      '<p class="verdict ' + (wasRight ? "y" : "n") + '">' +
-        (wasRight ? (m2 ? "Correct — mastered" : "Correct — one more to lock it in") : "Wrong — this one comes back") +
-      '</p>' +
+      '<p class="verdict ' + (wasRight ? "y" : "n") + '">' + verdict + '</p>' +
       '<p class="why">' + cur.w + '</p>' +
       (cur.ev ?
         '<div class="ev">' +
           '<div class="evh">' +
-            '<span class="evs">Independent evidence · ' + cur.ev.s + '</span>' +
+            '<span class="evs">Independent evidence \u00b7 ' + cur.ev.s + '</span>' +
             (cur.ev.c ? '<span class="evc">Guidelines disagree</span>' : '') +
           '</div>' +
           '<p>' + cur.ev.t + '</p>' +
         '</div>' : '') +
       '<div class="act">' +
         '<button class="btn" id="nextBtn">Next</button>' +
-        (wasRight ? "" : '<button class="btn ghost" id="againBtn">Ask me again now</button>') +
-        '<span class="hint">↵ or space</span>' +
+        '<span class="hint">\u21b5 or space</span>' +
       '</div>' +
     '</div>';
 
-  if (!wasRight) queue.splice(Math.min(3, queue.length), 0, cur);
   document.getElementById("nextBtn").onclick = next;
-  const ag = document.getElementById("againBtn");
-  if (ag) ag.onclick = () => { queue = queue.filter(q => q !== cur); queue.unshift(cur); next(); };
-  renderRail(); renderScore();
+  renderRail(); renderStreak(); renderScore();
   document.getElementById("nextBtn").focus();
+}
+
+function streakLost(a){
+  const lost = sessionSeen > 1 ? " \u2014 streak reset" : "";
+  return "Wrong" + lost + ", back in " + MISS_GAP;
 }
 
 function drawDone(){
   const p = pool();
-  const label = filter === "crit" ? "every red flag" : filter === "contested" ? "every contested topic" : filter === "weak" ? "your weak spots" :
+  const label = filter === "crit" ? "every red flag" : filter === "contested" ? "every contested topic" :
+                filter === "weak" ? "your weak spots" :
                 scope === "all" ? "all six phases" : MODULES.find(x => x.k === scope).ca;
   const acc = sessionSeen ? Math.round(sessionRight / sessionSeen * 100) : 0;
-  const weak = BANK.filter(q => st(q.id).miss > 0).length;
   stage.innerHTML =
   '<article class="card done">' +
-    '<h2>Clear — ' + label + '</h2>' +
-    '<p>Every question in this set answered correctly twice in a row. Come back in a few days and run it again; the ones you got wrong today are the ones that will slip first.</p>' +
+    '<h2>Clear \u2014 ' + label + '</h2>' +
+    '<p>Every question in this set is mastered and nothing is due for review yet. Leave it a few days and run it again \u2014 the spacing is built to catch what has faded, and the ones you missed today are the ones that will slip first.</p>' +
     '<div class="statgrid">' +
       '<div class="stat"><div class="v mono">' + sessionRight + '/' + sessionSeen + '</div><div class="l">This run</div></div>' +
       '<div class="stat"><div class="v mono">' + acc + '%</div><div class="l">Accuracy</div></div>' +
+      '<div class="stat"><div class="v mono">' + best + '</div><div class="l">Best streak</div></div>' +
       '<div class="stat"><div class="v mono">' + BANK.filter(q => mastered(q.id)).length + '/' + BANK.length + '</div><div class="l">Mastered</div></div>' +
-      '<div class="stat"><div class="v mono">' + weak + '</div><div class="l">Ever missed</div></div>' +
     '</div>' +
     '<div class="act" style="border:0;padding:0;margin:0">' +
-      '<button class="btn" id="againAll">Run it again</button>' +
+      '<button class="btn" id="againAll">Reset this set</button>' +
       '<button class="btn ghost" id="goCrit">Red flags only</button>' +
     '</div>' +
   '</article>';
   document.getElementById("againAll").onclick = () => {
-    p.forEach(q => { st(q.id).s = 0; });
-    sessionSeen = sessionRight = 0; save(); cur = null; render();
+    p.forEach(q => { const a = st(q.id); a.box = 0; a.next = 0; });
+    tick = 0; sessionSeen = sessionRight = 0; streak = 0; save(); cur = null; render();
   };
   document.getElementById("goCrit").onclick = () => {
     filter = "crit"; scope = "all";
-    BANK.filter(q => q.crit).forEach(q => { st(q.id).s = 0; });
-    sessionSeen = sessionRight = 0; save(); cur = null; build(); render();
+    BANK.filter(q => q.crit).forEach(q => { const a = st(q.id); a.box = 0; a.next = 0; });
+    tick = 0; sessionSeen = sessionRight = 0; streak = 0; save(); cur = null; render();
   };
 }
 
 /* ============ CONTROLS ============ */
-document.getElementById("critBtn").onclick = () => {
-  filter = filter === "crit" ? null : "crit"; cur = null; build(); render();
-};
-document.getElementById("contestedBtn").onclick = () => {
-  filter = filter === "contested" ? null : "contested"; cur = null; build(); render();
-};
-document.getElementById("weakBtn").onclick = () => {
-  filter = filter === "weak" ? null : "weak"; cur = null; build(); render();
-};
+function setFilter(f){
+  filter = (filter === f) ? null : f;
+  cur = null; render();
+}
+document.getElementById("critBtn").onclick = () => setFilter("crit");
+document.getElementById("contestedBtn").onclick = () => setFilter("contested");
+document.getElementById("weakBtn").onclick = () => setFilter("weak");
 document.getElementById("resetBtn").onclick = () => {
-  stats = {}; sessionSeen = sessionRight = 0; cur = null; save(); build(); render();
+  stats = {}; tick = 0; streak = 0; best = 0;
+  sessionSeen = sessionRight = 0; cur = null; save(); render();
 };
 
 document.addEventListener("keydown", e => {
@@ -1617,7 +1762,6 @@ function paintTimer(){
 
 /* ============ GO ============ */
 load();
-build();
 render();
 
 /* ---- install hint: iOS Safari, not yet on the home screen ---- */

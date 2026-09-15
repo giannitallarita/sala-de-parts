@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Decision drill for the birth partner: from the first contraction to the weeks at home.">
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#FCF5F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141010" media="(prefers-color-scheme: dark)">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sala de Parts">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png" type="image/png">
+
+<style>
+  html{background:#FCF5F3}
+  @media (prefers-color-scheme:dark){ html{background:#141010} }
+  body{margin:0; font:14px system-ui, sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none !important}
+</style>
+<title>Sala de Parts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#FCF5F3; --panel:#FFFBFA; --sunk:#F6EAE7;
+  --ink:#1B1310; --ink2:#6E5A54; --ink3:#94807A;
+  --line:#E7D5D0; --line2:#F0E2DE;
+  --accent:#9E1B20; --ok:#186B52; --warn:#8A5A12;
+  --ok-bg:#E6F2ED; --bad-bg:#FBEAEA; --warn-bg:#F8F0DF;
+  --grid:rgba(180,90,80,.09); --grid2:rgba(180,90,80,.16);
+  --m1:#9E1B20; --m2:#B4592A; --m3:#87681C; --m4:#2F6668; --m5:#45548A; --m6:#6B4577;
+  --shadow:0 1px 2px rgba(80,40,35,.05), 0 8px 24px -12px rgba(80,40,35,.18);
+  --f-disp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --paper:#141010; --panel:#1E1817; --sunk:#181312;
+  --ink:#F4EAE7; --ink2:#AE9A94; --ink3:#7E6C67;
+  --line:#332926; --line2:#271F1D;
+  --accent:#FF7074; --ok:#48C89B; --warn:#DFA94E;
+  --ok-bg:#12291F; --bad-bg:#2C1516; --warn-bg:#2A2010;
+  --grid:rgba(255,140,130,.055); --grid2:rgba(255,140,130,.10);
+  --m1:#FF7074; --m2:#F0915A; --m3:#D6B14A; --m4:#4FB3B5; --m5:#8EA0E0; --m6:#C08CD0;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --paper:#141010; --panel:#1E1817; --sunk:#181312;
+  --ink:#F4EAE7; --ink2:#AE9A94; --ink3:#7E6C67;
+  --line:#332926; --line2:#271F1D;
+  --accent:#FF7074; --ok:#48C89B; --warn:#DFA94E;
+  --ok-bg:#12291F; --bad-bg:#2C1516; --warn-bg:#2A2010;
+  --grid:rgba(255,140,130,.055); --grid2:rgba(255,140,130,.10);
+  --m1:#FF7074; --m2:#F0915A; --m3:#D6B14A; --m4:#4FB3B5; --m5:#8EA0E0; --m6:#C08CD0;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(to right, var(--grid2) 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(to bottom, var(--grid2) 0 1px, transparent 1px 100%);
+  background-size:8px 8px, 8px 8px, 40px 40px, 40px 40px;
+}
+.m1{--mc:var(--m1)} .m2{--mc:var(--m2)} .m3{--mc:var(--m3)}
+.m4{--mc:var(--m4)} .m5{--mc:var(--m5)} .m6{--mc:var(--m6)}
+
+.wrap{max-width:720px; margin:0 auto; padding-inline:18px; padding-block:0 96px}
+.mono{font-family:var(--f-mono); font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+header{padding-block:26px 14px}
+.brand{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+h1{
+  font-family:var(--f-disp); font-weight:800; font-size:clamp(25px,6vw,34px);
+  letter-spacing:-.02em; margin:0; text-wrap:balance;
+}
+.sub{color:var(--ink2); font-size:13.5px; margin:8px 0 0; max-width:60ch}
+.sub b{color:var(--ink); font-weight:600}
+.disclaim{
+  font-size:11.5px; color:var(--ink3); margin-top:10px; padding-top:9px;
+  border-top:1px dashed var(--line); max-width:70ch; line-height:1.5;
+}
+
+/* ---------- phase rail ---------- */
+.rail{display:grid; grid-template-columns:repeat(6,1fr); gap:5px; margin:20px 0 6px}
+.seg{
+  appearance:none; border:1px solid var(--line); background:var(--panel);
+  border-radius:3px; padding:8px 7px 7px; cursor:pointer; text-align:left;
+  position:relative; overflow:hidden; color:inherit; font:inherit;
+  transition:border-color .15s, transform .12s;
+}
+.seg:hover{border-color:var(--mc)}
+.seg:active{transform:translateY(1px)}
+.seg[aria-pressed="true"]{border-color:var(--mc); box-shadow:inset 0 0 0 1px var(--mc)}
+.seg .fill{position:absolute; inset:auto 0 0 0; height:3px; background:var(--mc); opacity:.85; transition:width .4s ease}
+.seg .fill-bg{position:absolute; inset:auto 0 0 0; height:3px; background:var(--line)}
+.seg .ord{display:block; font-family:var(--f-mono); font-size:10px; font-weight:600; color:var(--mc); letter-spacing:.04em}
+.seg .nm{
+  display:block; font-family:var(--f-disp); font-weight:700; font-size:11px;
+  letter-spacing:.055em; text-transform:uppercase; margin-top:2px; line-height:1.2;
+}
+.seg .ct{display:block; font-family:var(--f-mono); font-size:10px; color:var(--ink3); margin-top:3px}
+
+/* ---------- control strip ---------- */
+.controls{
+  display:flex; gap:7px; flex-wrap:wrap; align-items:center;
+  padding:11px 0 0; margin-bottom:20px; border-top:1px solid var(--line2); margin-top:12px;
+}
+.chip{
+  appearance:none; font:inherit; font-size:12px; font-weight:500;
+  border:1px solid var(--line); background:var(--panel); color:var(--ink2);
+  border-radius:100px; padding:5px 12px; cursor:pointer; white-space:nowrap;
+  transition:.14s;
+}
+.chip:hover{color:var(--ink); border-color:var(--ink3)}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.chip.crit[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .chip.crit[aria-pressed="true"],
+:root:not([data-theme="light"]) .chip.crit[aria-pressed="true"]{color:#1B1310}
+.spacer{flex:1 1 auto; min-width:0}
+.score{font-family:var(--f-mono); font-size:12px; color:var(--ink3); white-space:nowrap}
+.score b{color:var(--ink); font-weight:600}
+
+/* ---------- card ---------- */
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:4px;
+  box-shadow:var(--shadow); padding:22px 22px 20px;
+}
+.cardtop{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:16px}
+.eyebrow{
+  font-family:var(--f-disp); font-weight:700; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--mc);
+  border-bottom:2px solid var(--mc); padding-bottom:3px;
+}
+.tag{
+  font-family:var(--f-mono); font-size:10px; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; padding:2px 7px; border-radius:2px;
+  background:var(--bad-bg); color:var(--accent); border:1px solid transparent;
+}
+.tag.rep{background:var(--sunk); color:var(--ink3)}
+.qno{margin-left:auto; font-family:var(--f-mono); font-size:11px; color:var(--ink3)}
+.q{
+  font-family:var(--f-disp); font-weight:600; font-size:clamp(18px,3.4vw,21px);
+  line-height:1.38; letter-spacing:-.011em; margin:0 0 18px; text-wrap:balance;
+}
+
+.opts{display:flex; flex-direction:column; gap:7px}
+.opt{
+  display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left;
+  font:inherit; font-size:15px; line-height:1.45; color:var(--ink);
+  background:var(--panel); border:1px solid var(--line); border-radius:3px;
+  padding:11px 13px; cursor:pointer; transition:background .12s, border-color .12s;
+}
+.opt:hover:not(:disabled){background:var(--sunk); border-color:var(--ink3)}
+.opt:disabled{cursor:default}
+.opt .k{
+  font-family:var(--f-mono); font-size:11px; font-weight:600; color:var(--ink3);
+  border:1px solid var(--line); border-radius:2px; width:20px; height:20px;
+  display:grid; place-items:center; flex:0 0 20px; margin-top:1px;
+}
+.opt.right{background:var(--ok-bg); border-color:var(--ok)}
+.opt.right .k{border-color:var(--ok); color:var(--ok)}
+.opt.wrong{background:var(--bad-bg); border-color:var(--accent)}
+.opt.wrong .k{border-color:var(--accent); color:var(--accent)}
+.opt.dim{opacity:.5}
+.opt .mk{margin-left:auto; font-family:var(--f-mono); font-size:11px; font-weight:600; padding-left:8px; white-space:nowrap}
+.opt.right .mk{color:var(--ok)} .opt.wrong .mk{color:var(--accent)}
+
+.ev{
+  margin-top:15px; background:var(--sunk);
+  border:1px solid var(--line2); border-left:2px solid var(--ink3);
+  border-radius:0 3px 3px 0; padding:12px 14px;
+}
+.evh{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; margin-bottom:7px}
+.evs{
+  font-family:var(--f-mono); font-size:10.5px; font-weight:600;
+  color:var(--ink3); text-transform:uppercase; letter-spacing:.02em;
+}
+.evc{
+  font-family:var(--f-disp); font-size:9.5px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--warn); background:var(--warn-bg);
+  padding:2px 7px; border-radius:2px;
+}
+.ev p{margin:0; font-size:13.5px; line-height:1.58; color:var(--ink2)}
+.ev p b{color:var(--ink); font-weight:600}
+.ev p .num{font-family:var(--f-mono); font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums}
+.fb{margin-top:16px; border-top:1px solid var(--line2); padding-top:15px}
+.verdict{
+  font-family:var(--f-disp); font-weight:800; font-size:13px; letter-spacing:.06em;
+  text-transform:uppercase; margin:0 0 8px;
+}
+.verdict.y{color:var(--ok)} .verdict.n{color:var(--accent)}
+.why{font-size:14.5px; line-height:1.6; color:var(--ink2); margin:0}
+.why b{color:var(--ink); font-weight:600}
+.why .t{font-family:var(--f-mono); font-size:13px; color:var(--ink); background:var(--sunk); padding:1px 5px; border-radius:2px}
+.why .num{font-family:var(--f-mono); font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums}
+.act{
+  display:flex; gap:9px; align-items:center; margin-top:16px; padding-top:14px;
+  border-top:1px dashed var(--line); flex-wrap:wrap;
+}
+.btn{
+  appearance:none; font:inherit; font-family:var(--f-disp); font-weight:700;
+  font-size:13px; letter-spacing:.04em; text-transform:uppercase;
+  background:var(--ink); color:var(--paper); border:1px solid var(--ink);
+  border-radius:3px; padding:9px 18px; cursor:pointer; transition:.14s;
+}
+.btn:hover{opacity:.86}
+.btn.ghost{background:transparent; color:var(--ink2); border-color:var(--line)}
+.btn.ghost:hover{color:var(--ink); border-color:var(--ink3); opacity:1}
+.hint{font-family:var(--f-mono); font-size:11px; color:var(--ink3); margin-left:auto}
+
+/* ---------- done panel ---------- */
+.done{text-align:left; padding:34px 22px}
+.done h2{font-family:var(--f-disp); font-weight:800; font-size:24px; margin:0 0 10px; letter-spacing:-.015em}
+.done p{color:var(--ink2); font-size:14.5px; margin:0 0 18px; max-width:56ch}
+.statgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden; margin-bottom:20px}
+.stat{background:var(--panel); padding:13px 14px}
+.stat .v{font-family:var(--f-mono); font-weight:600; font-size:22px; letter-spacing:-.02em}
+.stat .l{font-family:var(--f-disp); font-size:9.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--ink3); margin-top:3px}
+
+/* ---------- reference drawer ---------- */
+.fab{
+  position:fixed; right:16px; bottom:16px; z-index:40;
+  font-family:var(--f-disp); font-weight:700; font-size:12px; letter-spacing:.06em;
+  text-transform:uppercase; background:var(--accent); color:#fff; border:none;
+  border-radius:3px; padding:12px 17px; cursor:pointer;
+  box-shadow:0 4px 18px -4px rgba(120,20,25,.5);
+}
+:root[data-theme="dark"] .fab, :root:not([data-theme="light"]) .fab{color:#1B1310}
+.scrim{position:fixed; inset:0; background:rgba(25,15,12,.45); z-index:50; opacity:0; pointer-events:none; transition:opacity .2s}
+.scrim.on{opacity:1; pointer-events:auto}
+.drawer{
+  position:fixed; z-index:60; right:0; top:0; bottom:0; width:min(480px,100%);
+  background:var(--panel); border-left:1px solid var(--line);
+  transform:translateX(100%); transition:transform .24s cubic-bezier(.3,.8,.35,1);
+  display:flex; flex-direction:column;
+}
+.drawer.on{transform:none}
+.dhead{display:flex; align-items:center; gap:8px; padding:15px 18px; border-bottom:1px solid var(--line); flex-wrap:wrap}
+.dhead h3{font-family:var(--f-disp); font-weight:800; font-size:14px; letter-spacing:.05em; text-transform:uppercase; margin:0}
+.dbody{overflow-y:auto; padding:18px; flex:1}
+.ref{margin:0 0 22px}
+.ref h4{
+  font-family:var(--f-disp); font-weight:700; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 9px;
+  border-bottom:1px solid var(--line); padding-bottom:5px;
+}
+.ref ul{margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:8px}
+.ref li{font-size:13.5px; line-height:1.5; color:var(--ink2); display:flex; gap:9px}
+.ref li::before{content:""; flex:0 0 5px; height:5px; margin-top:7px; background:var(--accent); border-radius:50%}
+.ref li b{color:var(--ink); font-weight:600}
+.ref li .n{font-family:var(--f-mono); font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums}
+
+/* ---------- timer ---------- */
+.tbtn{
+  width:100%; font-family:var(--f-disp); font-weight:800; font-size:17px;
+  letter-spacing:.05em; text-transform:uppercase; padding:26px; border-radius:4px;
+  border:1px solid var(--ink); background:var(--ink); color:var(--paper); cursor:pointer;
+}
+.tbtn.live{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .tbtn.live, :root:not([data-theme="light"]) .tbtn.live{color:#1B1310}
+.tread{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden; margin:14px 0}
+.tread div{background:var(--panel); padding:12px 14px}
+.tread .v{font-family:var(--f-mono); font-weight:600; font-size:24px; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.tread .l{font-family:var(--f-disp); font-size:9.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--ink3)}
+.tverd{padding:12px 14px; border-radius:3px; font-size:13.5px; line-height:1.5; background:var(--sunk); color:var(--ink2); border:1px solid var(--line)}
+.tverd.go{background:var(--bad-bg); color:var(--accent); border-color:var(--accent); font-weight:600}
+.tlog{margin-top:14px; width:100%; border-collapse:collapse; font-family:var(--f-mono); font-size:12px; font-variant-numeric:tabular-nums}
+.tlog th{text-align:left; font-family:var(--f-disp); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink3); padding:5px 8px 5px 0; border-bottom:1px solid var(--line)}
+.tlog td{padding:5px 8px 5px 0; border-bottom:1px solid var(--line2); color:var(--ink2)}
+
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+@media (max-width:560px){
+  .rail{grid-template-columns:repeat(3,1fr)}
+  .card{padding:18px 16px}
+  .seg .nm{font-size:10px}
+}
+
+/* ---------- phone / installed app ---------- */
+@media (max-width:430px){
+  body{font-size:15.5px}
+  .wrap{padding-inline:16px; padding-block:0 calc(92px + env(safe-area-inset-bottom))}
+  header{padding-block:calc(14px + env(safe-area-inset-top)) 10px}
+  h1{font-size:23px}
+  .sub, .disclaim{display:none}
+  .rail{margin-top:14px; gap:4px}
+  .seg{padding:7px 6px 6px}
+  .controls{margin-bottom:16px}
+  .card{padding:16px 14px}
+  .q{font-size:17.5px}
+  .opt{padding:12px; min-height:50px; align-items:center}
+  .why, .ev p{font-size:14px}
+  .fab{right:14px; bottom:calc(14px + env(safe-area-inset-bottom))}
+  .drawer{width:100%}
+  .dbody{padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .dhead{padding:calc(12px + env(safe-area-inset-top)) 16px 12px}
+  .hint{display:none}
+}
+.opt, .chip, .btn, .seg, .fab, .tbtn{-webkit-tap-highlight-color:transparent; touch-action:manipulation}
+body{-webkit-text-size-adjust:100%; overscroll-behavior-y:contain}
+
+.a2hs{
+  position:fixed; left:12px; right:12px; bottom:calc(12px + env(safe-area-inset-bottom));
+  z-index:70; display:flex; align-items:center; gap:12px;
+  background:var(--ink); color:var(--paper); border-radius:4px; padding:12px 14px;
+  box-shadow:0 8px 28px -8px rgba(0,0,0,.5);
+}
+.a2hs p{margin:0; font-size:13px; line-height:1.45; flex:1}
+.a2hs b{font-weight:600}
+.a2hs button{
+  appearance:none; font:inherit; font-family:var(--f-disp); font-weight:700; font-size:11px;
+  letter-spacing:.05em; text-transform:uppercase; white-space:nowrap;
+  background:transparent; color:var(--paper); border:1px solid var(--paper);
+  border-radius:3px; padding:7px 11px; cursor:pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand"><h1>Sala de Parts</h1></div>
+    <p class="sub">Decision drill for the <b>birth partner</b> — from the first contraction to the drive home and the weeks after. Built on the six-session ASSIR course in this folder, in the order the night actually happens — with the independent evidence behind each answer, and a flag wherever the guidelines genuinely disagree.</p>
+    <p class="disclaim">General protocol for the Catalan / Spanish public system. Your midwife and your hospital's own instructions override every answer here — confirm the thresholds at the next visit and write theirs down.</p>
+    <nav class="rail" id="rail" aria-label="Phases"></nav>
+    <div class="controls">
+      <button class="chip crit" id="critBtn" aria-pressed="false">Red flags only</button>
+      <button class="chip" id="contestedBtn" aria-pressed="false">Contested</button>
+      <button class="chip" id="weakBtn" aria-pressed="false">Weak spots</button>
+      <button class="chip" id="resetBtn">Reset</button>
+      <span class="spacer"></span>
+      <span class="score mono" id="score"></span>
+    </div>
+  </header>
+  <main id="stage" aria-live="polite"></main>
+</div>
+
+<button class="fab" id="fab">Reference</button>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Reference">
+  <div class="dhead">
+    <h3 id="dtitle">Reference</h3>
+    <span class="spacer"></span>
+    <button class="chip" id="tabRef" aria-pressed="true">Red flags</button>
+    <button class="chip" id="tabTimer" aria-pressed="false">Timer</button>
+    <button class="chip" id="dclose">Close</button>
+  </div>
+  <div class="dbody" id="dbody"></div>
+</aside>
+
+<script>
+"use strict";
+
+/* ============ MODULES — chronological ============ */
+const MODULES = [
+  {k:"m1", ord:"01", ca:"Senyals",       en:"Signs and when to go in"},
+  {k:"m2", ord:"02", ca:"Dilatació",     en:"Labour, positions, pain"},
+  {k:"m3", ord:"03", ca:"Expulsiu",      en:"Birth, placenta, first hour"},
+  {k:"m4", ord:"04", ca:"Intervencions", en:"Epidural, induction, cesarean"},
+  {k:"m5", ord:"05", ca:"Postpart",      en:"Her recovery and paperwork"},
+  {k:"m6", ord:"06", ca:"Nadó",          en:"Newborn, feeding, home"}
+];
+
+/* ============ QUESTION BANK ============
+   o: options, first listed is the correct one — shuffled at render.
+   crit:1 marks a go-to-hospital / emergency fact.
+   qs: alternate phrasings, rotated each time the question comes back. */
+const BANK = [
+
+/* ---------- M1 · SENYALS ---------- */
+{m:"m1",crit:1,
+ qs:["She has been having contractions all afternoon. Which pattern means this is real labour and not prodromes?",
+     "How do you tell true labour from pròdroms (prodromal / false labour)?"],
+ o:[{t:"They get closer together, longer and stronger, and a shower, a walk or lying down does not stop them"},
+    {t:"They are very painful — prodromal contractions never really hurt"},
+    {t:"They are felt only in the back, never at the front"},
+    {t:"They come exactly every 10 minutes without ever changing"}],
+ ev:{s:"NICE CG190 · intrapartum care",t:"Guidelines deliberately avoid a rigid cm-per-hour definition of progress. The old Friedman curve (1 cm/hour) was derived in the 1950s and consistently overcalls slow labour as abnormal; modern data show the normal first stage is far slower and far more variable — which is why 6 cm, not 4, now marks active labour."},
+  w:"The test is <b>progression</b>, not intensity. <span class='t'>Pròdroms</span> are irregular, plateau, and typically ease off with a warm shower, a change of position or rest. True labour keeps escalating on all three axes — frequency, duration, strength — and ignores everything you try. Pròdroms can genuinely hurt and can run for days; that is normal and not a reason to go in."},
+
+{m:"m1",crit:1,
+ qs:["First baby. When do you leave for the hospital on contractions alone?",
+     "What contraction pattern is the usual threshold for going in with a first baby?"],
+ o:[{t:"Regular contractions about every 5 minutes, each lasting around 60 seconds, sustained for 1–2 hours"},
+    {t:"As soon as contractions become painful enough that she wants an epidural"},
+    {t:"After the first contraction, so you get a bed"},
+    {t:"When contractions are 15 minutes apart"}],
+ ev:{s:"NICE CG190 · WHO intrapartum care",t:"There is no trial establishing an optimal arrival time — 5-1-1 is a pragmatic convention, not an evidence-based threshold. What <i>is</i> well evidenced is the cost of arriving too early: admission in the latent phase is associated with more oxytocin augmentation, more epidurals and more cesareans. If triage sends you home, that is a good outcome, not a wasted trip.",c:1},
+  w:"The common rule is <span class='t'>5–1–1</span>: every <span class='num'>5</span> min, <span class='num'>1</span> min long, for <span class='num'>1</span> hour (many services say 1–2 h for a first baby). Go <b>earlier</b> if: it is not her first, a previous labour was fast, you live far away, she is GBS positive, or anything on the red-flag list. <b>Write your hospital's own number down</b> — some say 3 contractions per 10 minutes instead."},
+
+{m:"m1",
+ q:"You are timing contractions. How do you measure the interval between them?",
+ o:[{t:"From the START of one contraction to the START of the next"},
+    {t:"From the end of one to the start of the next"},
+    {t:"From the peak of one to the peak of the next"},
+    {t:"From the end of one to the end of the next"}],
+ ev:{s:"Practical note",t:"Contraction apps and paper charts both record start-to-start by convention, so a mistimed log is not merely wrong for you — it misleads the midwife on the phone, who is making a triage decision from the numbers you read out."},
+  w:"<b>Start to start</b> is the frequency; start to end of the <i>same</i> contraction is the duration. Timing end-to-start is the classic partner error and it makes contractions look further apart than they are — you will arrive late. The Timer in the Reference drawer does this for you."},
+
+{m:"m1",crit:1,
+ qs:["Her waters break at 02:00. There are no contractions. What do you do?",
+     "The bag ruptures with no contractions yet — what is the move?"],
+ o:[{t:"Note the time, colour, smell and amount, then call the hospital — they will want her assessed even without contractions"},
+    {t:"Wait at home until contractions start, however many days that takes"},
+    {t:"Go only if she is bleeding"},
+    {t:"Put her in a bath to check whether it is really amniotic fluid"}],
+ ev:{s:"Cochrane (Middleton 2017) · term PROM",t:"After term prelabour rupture, planned early birth versus waiting reduces maternal infection (chorioamnionitis and endometritis) and neonatal infection, with no increase in cesarean. Most Spanish units therefore assess promptly and induce within roughly 12–24 h if labour has not started. Expectant management is a legitimate option to discuss — but with the numbers, not as a default."},
+  w:"Once the bag is broken the barrier to infection is gone, so the clock starts. Report four things: <b>time</b>, <b>colour</b>, <b>smell</b>, <b>amount</b>. Clear or straw with no smell is normal. No bath or pool once the waters have gone unless staff say otherwise."},
+
+{m:"m1",crit:1,
+ q:"The fluid when her waters break is green-brown rather than clear. What does that mean?",
+ o:[{t:"Meconium — the baby has passed stool in utero. Go in immediately, this needs monitoring"},
+    {t:"Completely normal, it is just old blood"},
+    {t:"It means labour will be quick"},
+    {t:"Wait and see if the next gush is clearer"}],
+ ev:{s:"ACOG · NICE",t:"Meconium is present in roughly 10–15% of term births and most of those babies are entirely well — this is a monitoring trigger, not a catastrophe. Routine suctioning at the perineum was abandoned after trials showed no benefit. What changes is surveillance: continuous monitoring, and a neonatal team at the birth."},
+  w:"Green, brown or 'pea soup' fluid is <span class='t'>meconi</span>. It can signal fetal distress and carries a risk of meconium aspiration, so it converts a wait-and-see into a <b>go now</b> and usually means continuous monitoring. Same for any fluid that smells foul, or fluid with fresh blood in it."},
+
+{m:"m1",crit:1,
+ qs:["She says the baby has been much quieter than usual since yesterday. What do you do?",
+     "Reduced fetal movements at 39 weeks — your move?"],
+ o:[{t:"Go in to be checked the same day — never wait to see if it improves tomorrow"},
+    {t:"Have her drink something cold and sugary and count for two hours first, then decide"},
+    {t:"Reassure her — babies always slow down near the end because there is no room"},
+    {t:"Wait for the next scheduled appointment"}],
+ ev:{s:"RCOG GTG 57 · AFFIRM trial 2018",t:"There is a real tension here. Reduced movements genuinely associate with stillbirth, but the large AFFIRM trial of a formal awareness-and-act package did not reduce stillbirth and did increase induction and cesarean. The consensus survived intact: still report it, every time. Kick-counting to a fixed number, however, is no longer recommended — the signal is a change from her own baby's pattern."},
+  w:"Reduced movement is one of the few genuinely urgent signs and it is the one partners most often talk their way out of. Babies do <b>not</b> normally slow down before labour — that is a myth. The cold-drink trick delays assessment; it is not a triage tool. Any reduction, any gestation, get checked."},
+
+{m:"m1",crit:1,
+ q:"Which of these is an emergency that means calling 112 rather than driving in?",
+ o:[{t:"Heavy bright-red bleeding like a heavy period, especially with constant hard pain that does not come and go"},
+    {t:"A pink-brown streak of mucus when she wipes"},
+    {t:"Losing the mucus plug in one piece"},
+    {t:"A contraction that lasts 70 seconds"}],
+ ev:{s:"SEGO · RCOG GTG 63",t:"Abruption complicates around 1% of pregnancies. The trap for a partner: concealed abruption can bleed internally with little or no visible blood, so pain plus a hard uterus plus a woman who looks unwell outranks the absence of bleeding. Do not wait to see blood before acting."},
+  w:"Fresh heavy bleeding plus a uterus that stays hard between contractions suggests <b>placental abruption</b> (<span class='t'>despreniment de placenta</span>) — time-critical. Distinguish it from the normal <span class='t'>marca de sang</span>: streaky pink or brown mucus, which is just the cervix changing."},
+
+{m:"m1",crit:1,
+ qs:["She has a bad headache, sees flashing lights and has pain under her right ribs. What is this?",
+     "Severe headache plus visual disturbance plus upper-abdominal pain in late pregnancy — what do you do?"],
+ o:[{t:"Possible pre-eclampsia — go in immediately, this can escalate to seizures"},
+    {t:"Normal third-trimester heartburn and eye strain"},
+    {t:"Dehydration — give fluids and paracetamol and reassess in the morning"},
+    {t:"A migraine; let her sleep it off in a dark room"}],
+ ev:{s:"ACOG · AJOG 2021 readmission data",t:"Pre-eclampsia affects 2–8% of pregnancies and remains a leading cause of maternal death worldwide. The number worth carrying: of women readmitted after birth with a hypertensive disorder, roughly <span class='num'>47%</span> had no such diagnosis during pregnancy at all. A clean pregnancy is not protection.",c:1},
+  w:"<span class='t'>Preeclàmpsia</span> presents exactly like this: headache that will not shift, visual flashes or blurring, pain in the epigastrium or right upper quadrant, sudden swelling of face and hands, sometimes vomiting. Untreated it progresses to eclampsia (seizures). It also <b>occurs after the birth</b>, up to six weeks postpartum — keep this one live."},
+
+{m:"m1",crit:1,
+ q:"Her waters break and she says she can feel something in the vagina. You look and see a loop of cord. What now?",
+ o:[{t:"Call 112 immediately, get her onto knees-and-chest with her bottom in the air, and do not push the cord back"},
+    {t:"Drive to the hospital sitting upright in the front seat"},
+    {t:"Gently push the cord back inside and go to hospital"},
+    {t:"Have her lie flat on her back and wait"}],
+ ev:{s:"RCOG GTG 50",t:"Roughly 1 in 500 births, and higher with a non-engaged head, breech, polyhydramnios or twins. Outcomes depend almost entirely on how fast pressure comes off the cord — which is why the position you put her in at home genuinely matters, and why this is worth rehearsing rather than reading once."},
+  w:"<b>Cord prolapse</b> — rare, and one of the few true obstetric emergencies you might face alone. The presenting part compresses the cord and cuts off the baby's oxygen. Knee-chest position (or all fours, hips high) takes the weight off it. Handling the cord makes it spasm. Ambulance, not car."},
+
+{m:"m1",
+ q:"She loses the mucus plug — a thick blob of jelly-like mucus. What does that tell you?",
+ o:[{t:"Very little about timing — labour may follow in hours or in two weeks. No action needed"},
+    {t:"Labour will start within 24 hours; head to hospital"},
+    {t:"The membranes have ruptured"},
+    {t:"An infection is developing"}],
+ w:"The <span class='t'>tap mucós</span> is the cervix's seal; losing it means the cervix is changing, nothing more precise. It can regenerate. It is only worth a call if what comes away is <b>fresh red blood</b> rather than streaked mucus."},
+
+{m:"m1",crit:1,
+ q:"She tested positive for Group B Strep (EGB). How does that change your plan?",
+ o:[{t:"Go in earlier — she needs IV antibiotics in labour, ideally at least 4 hours before the birth"},
+    {t:"Nothing changes; it is treated after the birth"},
+    {t:"It means an automatic cesarean"},
+    {t:"She takes oral antibiotics at home when contractions start"}],
+ ev:{s:"BJOG 2020 meta-analysis · ACOG vs RCOG",t:"Guidelines split. Spain and the US screen everyone at 35–37 weeks; the UK deliberately does not, treating on risk factors alone. A 2020 meta-analysis found universal screening over 50% more effective at preventing early-onset GBS disease (<span class='num'>0.33</span> vs <span class='num'>0.59</span> per 1000 births). You are in a screening country — so her swab result is a real, actionable number, which it would not be in Britain.",c:1},
+  w:"<span class='t'>Estreptococ del grup B</span> is harmless to her and can cause serious neonatal infection. Prophylaxis is <b>intravenous, in labour</b>, and needs time to work — so a GBS-positive labour is the one where arriving early genuinely matters, especially once the waters break."},
+
+{m:"m1",crit:1,
+ q:"She has regular painful contractions at 35 weeks. What is different about this?",
+ o:[{t:"Treat it as preterm labour and go in now — do not apply the 5–1–1 waiting rule"},
+    {t:"Same rule as at term — wait for 5–1–1"},
+    {t:"Nothing can be done before 37 weeks, so stay home"},
+    {t:"Wait until the waters break"}],
+ ev:{s:"WHO · ACOG",t:"A single course of antenatal corticosteroids before 34 weeks substantially reduces neonatal death, respiratory distress and intraventricular haemorrhage — one of the highest-value interventions in all of obstetrics. It needs roughly 24–48 h to work, which is exactly the window an early arrival buys and a late one loses."},
+  w:"Before <span class='num'>37</span> weeks the wait-at-home rules are off. Early assessment buys the options that matter: tocolysis to delay the birth, corticosteroids for the baby's lungs, magnesium for neuroprotection, and transfer to a hospital with the right neonatal unit."},
+
+{m:"m1",
+ q:"Early labour at home, contractions every 10 minutes. What is the most useful thing you can do?",
+ o:[{t:"Keep her fed, hydrated and resting — protect her energy, because this stage can be long"},
+    {t:"Start timing every single contraction and coaching her breathing from the first one"},
+    {t:"Drive to hospital so you are already there when it gets going"},
+    {t:"Keep her walking continuously to speed things up"}],
+ ev:{s:"Cochrane (Kobayashi 2017) · NICE",t:"Trials of deliberately delaying admission until active labour show less oxytocin, less analgesia and no harm to babies. This is one of the few decisions fully within your control on the night, and the evidence points the same way as the folk wisdom: stay home longer than feels comfortable."},
+  w:"The latent phase can last a day or more, and arriving too early tends to mean more intervention, not less. If it is night, sleep. If it is day, eat properly, move gently, shower, distract. Save the timing and the coaching for when the pattern actually changes — burning her out at 3 cm is the classic mistake."},
+
+{m:"m1",crit:1,
+ q:"Which of these means go to hospital straight away, regardless of contractions?",
+ o:[{t:"A fever of 38 °C or above"},
+    {t:"Three loose stools in a morning"},
+    {t:"Braxton Hicks tightenings while walking"},
+    {t:"Sharp pain in the pubic bone when turning over in bed"}],
+ w:"Fever of <span class='num'>38 °C</span> or more can mean chorioamnionitis, especially once the waters have broken, and it is dangerous for both. Loose stools and a burst of nesting energy are common normal precursors to labour; pubic-bone pain is usually symphysis pain."},
+
+/* ---------- M2 · DILATACIÓ ---------- */
+{m:"m2",
+ q:"What are the three stages of a physiological birth, in order?",
+ o:[{t:"Dilatació (dilation), expulsiu (pushing and birth), deslliurament (delivery of the placenta)"},
+    {t:"Pròdroms, dilatació, expulsiu"},
+    {t:"Contractions, epidural, cesarean"},
+    {t:"Dilation, birth, skin-to-skin"}],
+ w:"Learn the Catalan, because it is what you will hear in the room. <span class='t'>Dilatació</span> — the cervix opens to 10 cm. <span class='t'>Expulsiu</span> — full dilation to the baby being born. <span class='t'>Deslliurament</span> (Spanish: <span class='t'>alumbramiento</span>) — the placenta, usually within 30 minutes. A lot of partners do not realise there is a third stage at all."},
+
+{m:"m2",
+ qs:["The midwife says she is 6 cm. What does that mean in practice?",
+     "At what dilation is labour usually considered 'active'?"],
+ o:[{t:"Active labour — from here dilation usually speeds up noticeably"},
+    {t:"More than halfway, so roughly half the time is left"},
+    {t:"Pushing starts now"},
+    {t:"Still latent phase; expect many more hours at the same pace"}],
+ ev:{s:"Zhang 2010 · ACOG/SMFM consensus",t:"Contemporary labour curves show dilation from 4 to 6 cm can normally take many hours, and that the 1 cm/hour line misdiagnoses normal labour as arrested. Redefining active labour at 6 cm was explicitly intended to cut cesareans for 'failure to progress' — diagnosed before 6 cm, that label is usually premature."},
+  w:"Modern practice puts the active phase at about <span class='num'>6</span> cm, not the old 4. Getting from 0 to 6 typically takes far longer than 6 to 10, so 6 cm is much better news than the halfway arithmetic suggests. Do not do time-remaining maths out loud — it is almost always wrong and it demoralises her."},
+
+{m:"m2",
+ q:"The midwife reports 'cuello borrado al 80%, 4 cm'. What is the 80% describing?",
+ o:[{t:"Effacement — how much the cervix has thinned and shortened, separate from how far it has opened"},
+    {t:"How far down the birth canal the baby has descended"},
+    {t:"The percentage of labour completed"},
+    {t:"How dilated she is, as a percentage of 10 cm"}],
+ w:"<span class='t'>Esborrament</span> / <span class='t'>borramiento</span> is thinning, measured 0–100%. Dilation is opening, measured in cm. They move somewhat independently — with a first baby the cervix usually effaces substantially before it dilates much, which is why a long stretch at '1 cm' can still be real progress."},
+
+{m:"m2",
+ qs:["Around 8–9 cm she starts shaking, vomits, and says 'I can't do this any more, I want to go home'. What is happening?",
+     "She suddenly becomes irritable, trembles and declares she cannot continue. What does this tell you?"],
+ o:[{t:"Transition — a recognised phase right before pushing. It is a sign she is nearly there"},
+    {t:"She is going into shock and needs urgent help"},
+    {t:"Labour has stalled and will need augmentation"},
+    {t:"An allergic reaction to something she was given"}],
+ ev:{s:"Clinical description · not a trial finding",t:"Transition is a descriptive pattern rather than a trial-tested entity, and not every woman has a recognisable one. Treat it as a useful heuristic, not a diagnosis: if she says she cannot continue, the honest answer is that she may be minutes from pushing — never that she definitely is."},
+  w:"<b>Transition</b> is the single most useful thing a partner can recognise. Trembling, nausea, self-doubt, sudden anger, needing total silence — the hormonal surge before second stage. This is the moment to say <i>this is transition, you are nearly there</i>, not the moment to agree that she should give up. If she asks for an epidural for the first time here, it is worth saying she is close — but it stays her call."},
+
+{m:"m2",
+ q:"Which non-pharmacological method has the strongest evidence for pain relief in labour?",
+ o:[{t:"Immersion in warm water — a birth pool or shower"},
+    {t:"Aromatherapy with lavender oil"},
+    {t:"Hypnosis recordings"},
+    {t:"Acupressure on the hand"}],
+ ev:{s:"Cochrane 2018 (Cluett) · 15 trials, 3663 women",t:"Immersion in the first stage probably reduces epidural use and reduces reported pain. It makes little or no difference to mode of birth or to serious perineal tears, and — the question everyone asks — no increase in NICU admission or neonatal infection. Evidence on giving <i>birth</i> in water is thinner than evidence on labouring in it."},
+  w:"<span class='t'>Immersió en aigua</span> at about <span class='num'>37 °C</span> reduces pain scores and epidural use more reliably than any other drug-free method, and it is available in most Catalan units at least as a shower. Massage, sacral counterpressure, heat and movement all help. Aromatherapy is comfort and atmosphere — pleasant, not analgesic. Offer the shower long before she thinks to ask."},
+
+{m:"m2",
+ q:"What position should she avoid spending the first stage in, and why?",
+ o:[{t:"Flat on her back — it reduces blood flow to the placenta and works against gravity and the pelvis"},
+    {t:"Standing, because it tires her out"},
+    {t:"All fours, because it slows descent"},
+    {t:"Sitting on a birth ball, because it closes the pelvis"}],
+ ev:{s:"Cochrane 2017 (Gupta) · 30 trials, 9015 women",t:"For the second stage without an epidural, upright positions shortened pushing by about 6 minutes and reduced episiotomies and assisted deliveries. Two honest caveats: the evidence is low quality, and upright positions showed more blood loss over 500 mL — though blood is simply easier to measure when it is not soaking into a bed."},
+  w:"Supine compresses the vena cava, cutting placental perfusion, and gives up the help of gravity. Upright and mobile positions shorten the first stage and reduce epidural use. Your job: every 20–30 minutes, suggest a <b>change</b> — ball, leaning on the bed, all fours, side-lying, walking. Movement itself is the medicine."},
+
+{m:"m2",
+ q:"During a contraction she is breathing hard and says her hands are tingling and she feels dizzy. What is it?",
+ o:[{t:"Hyperventilation — slow her breathing down and have her breathe into cupped hands"},
+    {t:"The start of an eclamptic seizure"},
+    {t:"A normal effect of the epidural"},
+    {t:"Low blood sugar; give her something sweet immediately"}],
+ ev:{s:"Physiology · thin trial base",t:"The structured breathing patterns taught in antenatal classes have little trial evidence behind them as analgesia. Correcting frank hyperventilation is a different thing entirely — that is straightforward physiology, and slowing the out-breath fixes it within a minute."},
+  w:"Over-breathing blows off CO₂ and produces tingling in hands and around the mouth, dizziness, sometimes cramping fingers. Fix it by <b>slowing the out-breath</b> — breathe with her, audibly, slower than she is going. This is one of the few things only you will notice."},
+
+{m:"m2",
+ qs:["She is mid-contraction and the midwife asks her a question. What should you do?",
+     "What is the rule about talking to her during a contraction?"],
+ o:[{t:"Wait — do not speak to her during a contraction; handle questions and answer for her between them"},
+    {t:"Repeat the question louder so she can hear it over the pain"},
+    {t:"Answer on her behalf without ever checking with her"},
+    {t:"Encourage her to talk through it to stay distracted"}],
+ w:"During a contraction she is in the part of the brain that does the labouring, and pulling her out of it into language costs her. The useful pattern: silence and steady touch during, information and decisions in the <b>gap</b>. Being the one who holds questions until the gap is a real, concrete job."},
+
+{m:"m2",
+ q:"What is the pla de part (birth plan), in practice?",
+ o:[{t:"A written statement of her preferences, handed over at admission, that can be changed at any moment"},
+    {t:"A binding contract the hospital must follow"},
+    {t:"A legal form that must be signed by an obstetrician in advance"},
+    {t:"A schedule of when each stage of labour should happen"}],
+ ev:{s:"Estrategia de Atención al Parto Normal · SNS",t:"Birth plans have not been shown to change clinical outcomes, and they misfire if read as a list of demands. What they reliably do is force the conversation in advance — and the cesarean section is the part that earns its place, because it is the scenario you will otherwise be improvising."},
+  w:"The <span class='t'>pla de part</span> tells a team that has never met her what matters to her — pain relief preferences, positions, who cuts the cord, skin-to-skin, feeding, what to do in a cesarean. Keep a copy in the bag and one on your phone. It is preferences, not promises, and she can revise any line of it in the moment without explaining herself."},
+
+{m:"m2",
+ qs:["Staff propose an intervention. What is the single most useful question you can ask?",
+     "Something is being suggested and you need to buy her thinking time. What do you ask?"],
+ o:[{t:"'Is this an emergency, or do we have time to talk about it?'"},
+    {t:"'Is this what you'd do for your own wife?'"},
+    {t:"'What does the hospital protocol say?'"},
+    {t:"'Can we get a second opinion from another doctor?'"}],
+ ev:{s:"Ley 41/2002 · autonomía del paciente",t:"In Spain informed consent is a legal requirement, and for procedures such as a cesarean it must be in writing except in genuine emergency. Asking which situation you are in is not obstruction — it establishes which legal footing everyone is standing on."},
+  w:"It sorts the whole situation in one sentence. If it is an emergency, you stop talking and let them work. If it is not — and most proposals are not — you have just bought the minutes to run <b>BRAN</b>: <b>B</b>enefits, <b>R</b>isks, <b>A</b>lternatives, and what if we do <b>N</b>othing for now. Asking it is not obstruction; it is informed consent, and it is her legal right."},
+
+{m:"m2",
+ q:"Low-risk labour, no epidural yet. Can she eat and drink?",
+ o:[{t:"Yes — light food and free fluids are recommended in low-risk labour"},
+    {t:"No — nothing by mouth from the first contraction in case of general anaesthesia"},
+    {t:"Only ice chips"},
+    {t:"Only if a doctor writes an order"}],
+ ev:{s:"Cochrane (Singata 2013)",t:"Trials of restricting food and fluids in low-risk labour found no benefit and no harm either way — aspiration under modern anaesthesia is vanishingly rare. The review's own conclusion was that women should be free to choose. Once an epidural or an oxytocin infusion is running, expect the unit to tighten this."},
+  w:"The old nil-by-mouth rule came from an era of frequent general anaesthesia. Current guidance for low-risk labour is light food and free fluids — labour is endurance work and starving her invites exhaustion and ketosis. Pack food for <b>both</b> of you; you will also be there many hours and a fainting partner is a liability."},
+
+{m:"m2",
+ q:"Which type of fetal monitoring is recommended for a low-risk labour?",
+ o:[{t:"Intermittent auscultation — listening periodically, so she stays free to move"},
+    {t:"Continuous CTG on every labour, as the safest default"},
+    {t:"An internal scalp electrode from admission"},
+    {t:"No monitoring at all in low-risk labour"}],
+ ev:{s:"Cochrane 2017 (Alfirevic) · 13 trials, 37,000+ women",t:"The most quietly important number in the whole drill. Continuous CTG halves neonatal seizures — a real benefit — but shows <b>no reduction in perinatal death or cerebral palsy</b>, while significantly increasing cesareans and instrumental births. Fifty years of routine monitoring has not delivered the outcome it was introduced to prevent.",c:1},
+  w:"For low-risk labour, intermittent listening is as safe and keeps her mobile. Continuous <span class='t'>monitoratge</span> / CTG is for risk factors, epidural, oxytocin, meconium or an abnormal trace — and it tethers her to the bed, which is why it should be a decision rather than a habit. Ask whether telemetry (wireless) is available; many units have it and will not offer it unprompted."},
+
+{m:"m2",
+ q:"Practically, what should you actually be doing through a long active phase?",
+ o:[{t:"Counterpressure on her sacrum, water, a straw, cool cloths, prompting position changes and trips to the toilet"},
+    {t:"Filming, and updating family by message so they are not left waiting"},
+    {t:"Reading the monitor trace and telling her what it shows"},
+    {t:"Staying quiet and out of the way so the professionals can work"}],
+ ev:{s:"Cochrane 2017 (Bohren) · 27 trials, 15,858 women",t:"Continuous one-to-one support during labour increases spontaneous vaginal birth and shortens labour, while reducing cesareans, instrumental births, analgesia use and negative memories of the birth — with no identified harms. Very few interventions in obstetrics have a profile that clean, and this one is delivered by a person rather than a drug."},
+  w:"There is a concrete job list and it is yours: fluids every contraction or two, <b>a full bladder stalls labour</b> so prompt the toilet every hour, sacral counterpressure through each contraction, cool cloth, lip balm, dim the lights, guard the door. Phones and cameras belong to afterwards. The monitor is not your instrument."},
+
+/* ---------- M3 · EXPULSIU ---------- */
+{m:"m3",
+ q:"Cord clamping — what is recommended for a healthy baby?",
+ o:[{t:"Delay at least 1–3 minutes, or until the cord stops pulsing"},
+    {t:"Clamp immediately so the baby can be checked"},
+    {t:"Clamp only after the placenta is delivered, always"},
+    {t:"It makes no measurable difference either way"}],
+ ev:{s:"WHO · ACOG · FIGO",t:"WHO calls for not clamping before 1 minute (strong recommendation); ACOG and FIGO say at least 30–60 seconds. Observational work suggests around <span class='num'>120</span> s maximises haemoglobin without raising jaundice needing phototherapy — but the honest position is that the exact optimum is unknown. What is established is that earlier than one minute is worse."},
+  w:"<span class='t'>Pinçament tardà</span> lets the baby receive a substantial extra volume of blood — better iron stores and less anaemia through the first year. It is standard, but it is worth having in the birth plan, and worth you knowing so it does not get skipped in a busy room. The exception is a baby who needs resuscitation."},
+
+{m:"m3",crit:1,
+ qs:["She has a cesarean and cannot hold the baby. Who does skin-to-skin?",
+     "The mother is unavailable in the first hour. What happens to skin-to-skin?"],
+ o:[{t:"You do — bare chest, baby against you. Ask for it, because it may not be offered"},
+    {t:"The baby waits in a warmer until she is out of theatre"},
+    {t:"It is skipped; it only works with the mother"},
+    {t:"A nurse holds the baby until the mother is ready"}],
+ ev:{s:"Cochrane 2025 (Moore) · 69 trials, 7000+ pairs",t:"Early skin-to-skin raised exclusive breastfeeding at one month to <span class='num'>75%</span> versus <span class='num'>55%</span> without it, and improved the baby's temperature, blood glucose and cardio-respiratory stability. Across 69 trials the effect was beneficial or neutral and <b>never harmful</b>, including after cesarean. The trials studied mothers; the mechanism is a warm chest, which is why the partner substitution is standard practice."},
+  w:"This is the most important thing in this whole drill that is specifically <b>yours</b>. <span class='t'>Pell amb pell</span> stabilises the baby's temperature, heart rate, breathing and blood sugar, and calms them — and a parent's chest does it, not necessarily the mother's. If she is in theatre, being stitched, haemorrhaging or asleep, that is your baby on your chest. Say it out loud in advance and put it in the birth plan: <i>if she can't, I will</i>. Wear a shirt that opens at the front."},
+
+{m:"m3",
+ q:"What is the 'hora d'or' (golden hour) and what should happen in it?",
+ o:[{t:"The first hour after birth — uninterrupted skin-to-skin, with weighing and measuring deferred"},
+    {t:"The first hour of active labour, when progress is fastest"},
+    {t:"The hour after the epidural, when she should rest"},
+    {t:"The hour you have to register the birth"}],
+ ev:{s:"WHO Baby-Friendly Hospital Initiative · Step 4",t:"BFHI makes uninterrupted skin-to-skin within the first hour a formal accreditation standard — so in an accredited hospital you are asking for the protocol, not a favour. Worth knowing which standard your unit holds; it changes the tone of the request entirely."},
+  w:"Routine tasks — weighing, measuring, dressing, the vitamin K, even the first bath — can all wait. The first hour drives thermoregulation, bonding and the first breastfeed. Your job is to protect it: from visitors, from your own phone, and from well-meant routine. It is fine to ask <i>can that wait an hour?</i>"},
+
+{m:"m3",
+ q:"What happens in the deslliurament (third stage)?",
+ o:[{t:"The placenta is delivered, usually within about 30 minutes, often helped by an oxytocin injection"},
+    {t:"The baby is delivered"},
+    {t:"The perineum is stitched"},
+    {t:"She is moved to the postnatal ward"}],
+ ev:{s:"Cochrane (Begley 2019) · WHO",t:"Active management clearly reduces severe postpartum haemorrhage and the need for transfusion. The trade-offs are real but modest — more afterpains, more vomiting, a small rise in blood pressure with ergometrine. WHO recommends a uterotonic at every birth, with oxytocin first choice precisely because it has the mildest side-effect profile."},
+  w:"Active management — prophylactic oxytocin, controlled cord traction — substantially reduces postpartum haemorrhage and is the usual offer. Someone will check the placenta is <b>complete</b>; retained fragments cause bleeding and infection. Expect one more round of contractions; nobody warns partners about this and it surprises them."},
+
+{m:"m3",
+ q:"The baby scores 8 at one minute and 9 at five minutes. What is that?",
+ o:[{t:"The Apgar score — a quick 0–10 check of colour, heart rate, reflexes, tone and breathing. This is normal"},
+    {t:"A weight percentile against gestational age"},
+    {t:"A measure of how well the birth went for the mother"},
+    {t:"A prediction of the baby's later development"}],
+ ev:{s:"ACOG/AAP joint statement",t:"Both bodies state explicitly that Apgar alone does not predict neurological outcome and must not be used to diagnose asphyxia. It was designed in 1953 to answer one question — does this baby need help right now — and that is the only question it answers."},
+  w:"Apgar is scored at <span class='num'>1</span> and <span class='num'>5</span> minutes; <span class='num'>7</span> or above is reassuring, and almost nobody gets 10 at one minute because hands and feet stay blue for a while. It describes how the baby is adapting right now. It predicts nothing about the child."},
+
+{m:"m3",crit:1,
+ qs:["An hour after the birth she is soaking a pad in under an hour, feels dizzy and looks grey. What do you do?",
+     "Postpartum, she is bleeding heavily and passing large clots. Your move?"],
+ o:[{t:"Call staff immediately — this is postpartum haemorrhage until proven otherwise"},
+    {t:"Let her rest and recheck in an hour; heavy bleeding is normal after birth"},
+    {t:"Get her up and walking to help the uterus contract"},
+    {t:"Give her water and sugar and wait for the next observation round"}],
+ ev:{s:"WHO · ACOG quantitative blood loss",t:"PPH is defined as 500 mL after a vaginal birth or 1000 mL after a cesarean — but visual estimation underestimates blood loss by <span class='num'>30–50%</span>, which is why units are shifting to weighing swabs. That error is precisely why a partner watching the pad count is genuinely useful rather than merely anxious.",c:1},
+  w:"<span class='t'>Hemorràgia postpart</span> is a leading cause of maternal death and it can develop fast in a quiet room after everyone has relaxed. Your thresholds: soaking a pad in <b>under an hour</b>, clots bigger than a plum, dizziness, racing pulse, grey or clammy skin, feeling faint on sitting up. You are the monitor in that room. Press the bell — over-calling costs nothing."},
+
+{m:"m3",
+ q:"Vitamin K is offered for the baby. What is it for?",
+ o:[{t:"Preventing vitamin K deficiency bleeding, including bleeding into the brain, in the first weeks"},
+    {t:"Preventing jaundice"},
+    {t:"Boosting the immune system against infection"},
+    {t:"Helping the umbilical stump heal"}],
+ ev:{s:"AAP 2022 · Canadian Paediatric Society",t:"The numbers, since this one gets debated. With the IM injection, late vitamin K deficiency bleeding runs at <span class='num'>0–0.4</span> per 100,000. With a <i>complete</i> 3-dose oral course, <span class='num'>0–0.9</span> per 100,000 — and that assumes every dose is actually given weeks later. Without prophylaxis the rate is roughly 1 in 15,000–20,000, and around half of those bleed into the brain.",c:1},
+  w:"Newborns are born with very low vitamin K and breast milk contains little, so clotting factors fall short. <span class='t'>Vitamina K</span> is a single intramuscular dose at birth. An oral schedule exists but needs <b>repeated doses over weeks</b> and is less reliable, mostly because doses get missed. Decide in advance, not while holding a newborn."},
+
+{m:"m3",
+ q:"The baby is given erythromycin eye ointment. Why?",
+ o:[{t:"To prevent neonatal conjunctivitis from bacteria picked up during birth, which can threaten sight"},
+    {t:"To keep the eyes moist under the delivery lights"},
+    {t:"To treat an infection the baby already has"},
+    {t:"To help the eyes open"}],
+ w:"<span class='t'>Pomada d'eritromicina</span> prevents <i>ophthalmia neonatorum</i> — chiefly gonococcal and chlamydial conjunctivitis, which can cause blindness. It is prophylaxis, not treatment, and it can usually be deferred past the golden hour: ask for it after the first skin-to-skin and first feed."},
+
+{m:"m3",
+ q:"When should the first breastfeed ideally happen?",
+ o:[{t:"Within the first hour, with the baby often finding the breast unaided during skin-to-skin"},
+    {t:"Once she has rested and been moved to the ward"},
+    {t:"Once the milk comes in, around day 3"},
+    {t:"After the baby has been bathed and weighed"}],
+ ev:{s:"Cochrane 2025 (Moore) · WHO BFHI",t:"The breast crawl is well documented and is one mechanism behind the skin-to-skin breastfeeding effect. It is unhurried — typically 30–60 minutes of bobbing and false starts. Partners and relatives routinely mistake that period for the baby failing to feed, and reach for a bottle."},
+  w:"Left on the chest, a newborn will often crawl and self-attach — the breast crawl. Feeding in the first hour improves breastfeeding outcomes and helps the uterus contract, which reduces bleeding. Another reason to defend the golden hour."},
+
+{m:"m3",
+ q:"Second stage with a first baby and an epidural. Roughly how long can pushing take?",
+ o:[{t:"Up to about 3 hours can still be within normal limits"},
+    {t:"No more than 20 minutes before something is wrong"},
+    {t:"Exactly one hour, after which a cesarean is automatic"},
+    {t:"It is never longer than 30 minutes"}],
+ ev:{s:"ACOG/SMFM obstetric care consensus",t:"The thresholds were deliberately extended — 3 h for a first baby, 2 h for later ones, plus an hour each with an epidural — specifically to reduce cesareans for 'arrest of descent'. Longer pushing does raise instrumental delivery and infection somewhat, so this is a genuine trade-off rather than free time."},
+  w:"With a first baby and an epidural, up to roughly <span class='num'>3</span> hours is accepted; shorter without an epidural, and shorter again for a second baby. Knowing this stops you panicking at 45 minutes, and stops you accepting a 'this is taking too long' framing that is not actually outside normal."},
+
+{m:"m3",
+ q:"What newborn screening tests should you expect in the first days?",
+ o:[{t:"The heel-prick metabolic screen around 48 hours and a hearing screen before discharge"},
+    {t:"A blood group test and a chest X-ray"},
+    {t:"A full genetic panel from cord blood"},
+    {t:"An eye test and a hip X-ray"}],
+ w:"<span class='t'>Prova del taló</span> at around <span class='num'>48</span> h screens for metabolic and endocrine conditions that are treatable if caught early. <span class='t'>Cribratge auditiu</span> uses otoacoustic emissions and takes minutes. A 'refer' on the hearing screen usually just means fluid or a restless baby — it means repeat the test, not deafness."},
+
+/* ---------- M4 · INTERVENCIONS ---------- */
+{m:"m4",
+ q:"She is having an epidural sited. What is your job?",
+ o:[{t:"Help her hold absolutely still through contractions, and stay seated yourself in case you feel faint"},
+    {t:"Watch the needle go in so you can describe it to her"},
+    {t:"Persuade her to hold out a bit longer"},
+    {t:"Leave the room so as not to get in the way"}],
+ ev:{s:"Cochrane (Anim-Somuah 2018) · 40+ trials",t:"Epidural gives the best pain relief available, and it does <b>not</b> increase the cesarean rate or cause long-term backache — two persistent myths worth retiring before the night. It does lengthen the second stage, increase instrumental birth and maternal fever, and require a catheter. Post-dural puncture headache occurs in roughly 1 in 100–200."},
+  w:"She must stay curled and still while a needle goes near her spinal cord, and a contraction will arrive mid-procedure. Your job is a steady grip, eye contact and a counting voice. <b>Sit down</b> — partners faint at this more than at anything else, and a partner on the floor stops the procedure. Some units ask you to step out; ask beforehand which yours does."},
+
+{m:"m4",
+ q:"Which of these is a genuine effect of an epidural?",
+ o:[{t:"It makes an instrumental delivery somewhat more likely, and usually brings a catheter and continuous monitoring"},
+    {t:"It makes a cesarean substantially more likely"},
+    {t:"It stops labour progressing altogether"},
+    {t:"It passes to the baby and makes them sleepy at the breast"}],
+ ev:{s:"Cochrane (Anim-Somuah 2018)",t:"The instrumental-delivery signal is partly historical: it comes largely from older trials using higher-concentration anaesthetic. Modern low-dose and patient-controlled techniques narrow the gap, and a more upright pushing position offsets some of it. When someone quotes you a risk figure, it is fair to ask how old the technique behind it is.",c:1},
+  w:"The honest ledger: excellent pain relief; slightly longer second stage and more forceps or ventouse; loss of bladder sensation so a catheter; continuous monitoring; sometimes a drop in blood pressure; possible fever; a small risk of post-dural headache. It does <b>not</b> raise the cesarean rate, and it does not stop labour. Knowing the real list means you neither talk her out of it nor oversell it."},
+
+{m:"m4",
+ q:"Is it ever 'too late' for an epidural?",
+ o:[{t:"Rarely — usually only once she is pushing or too close to birth for it to take effect in time"},
+    {t:"Yes, after 5 cm no anaesthetist will site one"},
+    {t:"Yes, it must be requested before labour begins"},
+    {t:"Yes, once the waters have broken"}],
+ w:"There is no fixed cm cut-off; the real limits are practical — whether she can stay still, whether an anaesthetist is free, and whether there is time for it to work (siting plus onset is roughly <span class='num'>20–30</span> minutes). 'It's too late' sometimes means 'no one is available right now' — worth asking which is meant."},
+
+{m:"m4",
+ q:"What is a walking epidural?",
+ o:[{t:"A low-dose technique that preserves enough motor power for her to stand or move, with supervision"},
+    {t:"An epidural given while she walks the corridor"},
+    {t:"An epidural that wears off before pushing"},
+    {t:"Another name for nitrous oxide"}],
+ ev:{s:"BUMPES trial 2017 · BMJ",t:"A large UK trial of upright versus lying-down position in the second stage with a low-dose epidural found <b>fewer</b> spontaneous vaginal births in the upright group — the opposite of the finding without an epidural. Mobility is worth having for comfort and control; do not assume it also improves the outcome once an epidural is running."},
+  w:"Lower concentration of local anaesthetic plus an opioid: pain relief with much of her muscle strength intact. Whether she may actually get up depends on the unit and on a leg-strength check. Worth asking whether yours offers it — it is not always volunteered."},
+
+{m:"m4",crit:1,
+ qs:["She is using nitrous oxide. She gets drowsy and lets the mask slip. What do you do?",
+     "What is the rule about holding the nitrous oxide mask?"],
+ o:[{t:"Nothing — never hold the mask for her. Letting go is the safety mechanism"},
+    {t:"Hold it to her face so she gets the full benefit of the contraction"},
+    {t:"Hold it and ask a midwife to take over"},
+    {t:"Strap it on so it cannot slip"}],
+ ev:{s:"AHRQ comparative effectiveness review",t:"Honest picture: nitrous is a weak analgesic — about <span class='num'>38–42%</span> rate it very effective against <span class='num'>72–84%</span> for epidural — yet maternal satisfaction stays high, because it preserves control and mobility and stops within seconds. Satisfaction and pain scores are measuring different things here, and satisfaction is not the lesser one."},
+  w:"<span class='t'>Òxid nitrós</span> is self-administered <b>by design</b>: if she has had too much she becomes drowsy, the mask falls, she breathes air and clears it in seconds. Holding it defeats the one thing that makes it safe. Timing tip you can genuinely help with: she should start inhaling at the <b>first sign</b> of a contraction, because it takes about 30 seconds to bite — waiting for the pain means it peaks too late."},
+
+{m:"m4",
+ q:"Which of these is NOT a usual reason to induce labour?",
+ o:[{t:"The mother is tired of being pregnant and the date suits the family"},
+    {t:"41–42 weeks with no labour"},
+    {t:"Waters broken for a prolonged period with no contractions"},
+    {t:"Pre-eclampsia, poor fetal growth or reduced movements"}],
+ ev:{s:"ARRIVE trial 2018 · NEJM · contested",t:"ARRIVE randomised 6106 low-risk first-time mothers and found elective induction at 39 weeks <b>lowered</b> cesarean rates versus waiting — the reverse of long-standing belief. It has been heavily criticised on external validity (27% participation, US staffing patterns), and Europe has largely not adopted it as routine. Expect Spanish practice to wait for 41 weeks; expect anything you read in English to argue about this.",c:1},
+  w:"<span class='t'>Inducció</span> is a medical decision with real trade-offs — longer, usually more painful labour, continuous monitoring, a higher chance of instrumental birth. Prolonged pregnancy, PROM, pre-eclampsia, IUGR, poorly controlled diabetes and reduced movements are the standard indications. Convenience is not one, and you should recognise that framing if you hear it."},
+
+{m:"m4",
+ q:"What is the usual sequence of methods in an induction?",
+ o:[{t:"Ripen the cervix (prostaglandin or Foley balloon), then break the waters, then IV oxytocin if needed"},
+    {t:"IV oxytocin first, then prostaglandins if it fails"},
+    {t:"Break the waters immediately, then wait 24 hours"},
+    {t:"A single tablet, and labour starts within the hour"}],
+ ev:{s:"Cochrane · mechanical vs pharmacological ripening",t:"A Foley balloon and vaginal prostaglandin achieve similar vaginal birth rates, but the balloon causes far less uterine hyperstimulation — which matters after a previous cesarean. Outpatient ripening, where she goes home overnight after the first stage, is offered by some units and is worth asking about."},
+  w:"An induction is a <b>sequence over a day or more</b>, not an event — expect to be there a long time before anything resembling labour begins. Ripening first (<span class='t'>prostaglandines</span> gel or pessary, or a <span class='t'>sonda de Foley</span>), then <span class='t'>amniorexi</span>, then <span class='t'>oxitocina</span>. Pack accordingly and warn her family not to expect news."},
+
+{m:"m4",
+ q:"Warn her about one thing regarding induced contractions with IV oxytocin:",
+ o:[{t:"They tend to come on stronger and faster than natural labour, with less build-up"},
+    {t:"They are milder, so pain relief is rarely needed"},
+    {t:"They stop as soon as the drip is paused, so there is no rush"},
+    {t:"They feel identical to natural contractions"}],
+ ev:{s:"Pharmacology · WHO",t:"Synthetic oxytocin does not cross the blood-brain barrier, so it produces the uterine contraction without the central endorphin and calming response that accompanies natural oxytocin. That is the mechanism behind the common report that induced contractions hurt more at the same dilation — it is not a matter of her expectations."},
+  w:"Synthetic oxytocin skips the gradual ramp the body normally builds, and she does not get the same endorphin response. Many women find induced contractions harder from an earlier point, which is why epidural uptake is higher in inductions — that is not weakness, it is a different labour."},
+
+{m:"m4",
+ q:"A non-urgent cesarean under spinal anaesthesia is decided. Where are you?",
+ o:[{t:"In theatre with her, by her head, normally — but you wait outside while the spinal is sited"},
+    {t:"In the waiting room; partners are never in theatre"},
+    {t:"Standing at the surgeon's shoulder to watch"},
+    {t:"Only allowed in for elective, never intrapartum, cesareans"}],
+ ev:{s:"WHO statement on cesarean section rates",t:"WHO holds that population cesarean rates above roughly 10–15% do not improve maternal or newborn mortality. Spain runs around 25% overall and higher in the private sector. That is context for the decision — never a verdict on any individual cesarean, many of which are precisely the ones that save lives."},
+  w:"For a planned or non-urgent cesarean with a spinal, you are normally in, gowned, sitting at her head. You will usually be asked to wait outside during the spinal and called in once the drape is up. The exception: a <b>general anaesthetic</b>, where partners almost always cannot come in — which is exactly the scenario where you must already have agreed who does skin-to-skin."},
+
+{m:"m4",
+ q:"What can you ask for to make a cesarean more 'humanised'?",
+ o:[{t:"A lowered or clear drape at the moment of birth, skin-to-skin in theatre, one arm left free, your music"},
+    {t:"Nothing — a cesarean is surgery and nothing is negotiable"},
+    {t:"To film the operation"},
+    {t:"To choose the type of incision"}],
+ ev:{s:"Cochrane 2025 (Moore) · BFHI",t:"Skin-to-skin in theatre rests on the same trial evidence as after a vaginal birth and is explicitly endorsed for cesarean births, with measurable gains in breastfeeding and thermoregulation. Where a unit declines, the obstacle is usually workflow and staffing rather than evidence — which makes it a reasonable thing to raise in advance rather than on the day."},
+  w:"<span class='t'>Cesària humanitzada</span> is a real and increasingly standard offer: drape lowered so she sees the birth, ECG leads and cannula placed to keep one arm free for holding, skin-to-skin on her chest in theatre, delayed cord clamping where feasible, quiet at the moment of birth, your playlist. <b>Ask before the day</b> — put it in the birth plan as the 'if we end up in theatre' section, because nobody negotiates well at 4 a.m."},
+
+{m:"m4",
+ q:"What is different about recovery after a cesarean compared with a vaginal birth?",
+ o:[{t:"Longer stay, no lifting anything heavier than the baby, no driving for weeks, and she needs real help to stand at first"},
+    {t:"Nothing much; recovery is generally faster because there is no perineal damage"},
+    {t:"She cannot breastfeed for the first 48 hours"},
+    {t:"She must stay in bed for a week"}],
+ ev:{s:"ERAC · enhanced recovery pathways",t:"Enhanced recovery after cesarean — eating early, catheter out early, walking within 6–12 h, scheduled non-opioid pain relief — shortens stay without raising complications. So if she is being encouraged up sooner than you expect, that is current practice, not a busy ward pushing her out."},
+  w:"It is abdominal surgery. Expect roughly <span class='num'>3</span> days in hospital, early mobilisation but with help, wound care, no lifting beyond the baby, and no driving for several weeks (check the insurer as well as the surgeon). She <b>can</b> breastfeed — the rugby-ball hold keeps weight off the wound. Practically: you are doing every lift, every nappy, and every night for a fortnight."},
+
+{m:"m4",
+ q:"What must be true before an instrumental delivery (forceps or ventouse) can be attempted?",
+ o:[{t:"Full dilation, the head engaged and low enough, an empty bladder and adequate anaesthesia"},
+    {t:"Only that the mother consents"},
+    {t:"That she has already pushed for at least two hours"},
+    {t:"That an epidural is already in place"}],
+ ev:{s:"Cochrane (O'Mahony) · RCOG GTG 26",t:"Ventouse is more likely to fail than forceps but causes significantly less maternal trauma — fewer third- and fourth-degree tears — which is why it is generally first choice. Forceps carry higher risk to her pelvic floor; ventouse carries more cephalhaematoma and jaundice for the baby. Genuinely a trade-off, not a ranking."},
+  w:"<span class='t'>Part instrumentat</span> has strict conditions — full dilation, known head position, sufficient descent, bladder emptied, anaesthesia, consent, and a theatre ready in case it fails. <span class='t'>Ventosa</span> (vacuum) leaves a scalp swelling or bruise that looks alarming and resolves; forceps leave facial marks that fade. Expect the baby's head to look misshapen; it is not damage."},
+
+{m:"m4",
+ q:"Is an episiotomy routine?",
+ o:[{t:"No — it should be selective and only for a specific indication, and the mediolateral cut is the recommended type"},
+    {t:"Yes, all first-time mothers get one to prevent tearing"},
+    {t:"Yes, it is always done before an instrumental delivery"},
+    {t:"It is never performed any more"}],
+ ev:{s:"Cochrane 2017 (Jiang) · Cochrane 2024 (Dwan)",t:"Restrictive episiotomy cuts severe perineal trauma by around 30% versus routine use, with no downside found. Separately — and this is directly actionable — a <b>warm compress held on the perineum</b> while she pushes likely reduces third- and fourth-degree tears (RR <span class='num'>0.46</span>, moderate certainty) and clearly reduces pain. Ask for it: it is free, and it is often simply forgotten."},
+  w:"Routine <span class='t'>episiotomia</span> was abandoned because it does not prevent serious tears and causes more pain and blood loss than a natural tear. It is still indicated sometimes — fetal distress needing a fast birth, some instrumental deliveries. <b>Mediolateral</b>, angled away from the anus, is the recommended type. Consent should be sought; it is reasonable to have it in the birth plan as 'only if indicated'."},
+
+{m:"m4",
+ q:"What distinguishes a third- or fourth-degree perineal tear?",
+ o:[{t:"It involves the anal sphincter — it needs repair in theatre and dedicated follow-up"},
+    {t:"It is any tear that requires stitches"},
+    {t:"It is a tear that extends upwards toward the urethra"},
+    {t:"It is a tear that reopens after healing"}],
+ ev:{s:"RCOG GTG 29",t:"Third- and fourth-degree tears occur in roughly 3% of first vaginal births (about 1% overall) and are underdiagnosed — which matters, because a missed sphincter injury is the main preventable cause of later faecal incontinence. If repair happened in theatre, chase the follow-up appointment; it is the one most often never booked."},
+  w:"First degree is skin only; second involves perineal muscle and is the most common stitched tear; <b>third</b> reaches the anal sphincter; <b>fourth</b> extends into the rectal lining. Third and fourth are repaired in theatre and need physiotherapy and follow-up, because untreated they cause incontinence. If this happens, make sure the follow-up appointment actually gets made before you leave."},
+
+{m:"m4",
+ q:"She had a cesarean last time. What are her options now?",
+ o:[{t:"A vaginal birth after cesarean is usually possible and can be planned, with continuous monitoring in labour"},
+    {t:"A repeat cesarean is compulsory after any previous cesarean"},
+    {t:"A vaginal birth is only allowed after two or more cesareans"},
+    {t:"She may attempt it but no induction or epidural would be permitted"}],
+ ev:{s:"ACOG · RCOG GTG 45",t:"Around <span class='num'>60–80%</span> of planned VBACs succeed. Uterine rupture risk is roughly <span class='num'>0.5%</span> with spontaneous labour, rising with induction — particularly prostaglandins, which is why a Foley balloon is preferred if ripening is needed. A planned repeat cesarean is not the risk-free alternative either; it carries its own surgical and future-pregnancy risks."},
+  w:"<span class='t'>Part vaginal després de cesària</span> (PVDC / VBAC) succeeds in most women who attempt it after one low transverse cesarean. The trade-off is a small risk of uterine rupture, which is why it involves continuous monitoring and why induction is handled cautiously. Epidural is fine. 'Once a cesarean, always a cesarean' is out of date."},
+
+/* ---------- M5 · POSTPART ---------- */
+{m:"m5",
+ q:"What is the normal course of the lochia (loquis) after birth?",
+ o:[{t:"Red for the first days, then pink-brown, then yellowish-white, tapering over 4–6 weeks"},
+    {t:"Bright red throughout, for about a week, then it stops"},
+    {t:"A couple of days of light spotting only"},
+    {t:"Brown from the start, lasting about ten days"}],
+ ev:{s:"Observational · WHO postnatal care",t:"Lochia duration varies enormously — a median around 24–36 days, with a normal range running past 6 weeks. Duration alone means little; what carries information is the <b>direction of change</b>, and whether it smells. Do not let a normal-but-long course be treated as pathology, or a sudden reversal be waved through as normal."},
+  w:"The colour progression is the thing to watch, because a <b>reversal</b> is the warning sign: going back to fresh red and heavy after it had settled means overdoing it or a problem. A foul smell means infection. Some increase on standing up or while breastfeeding is normal."},
+
+{m:"m5",
+ q:"She gets strong cramps every time she breastfeeds in the first days. What is this?",
+ o:[{t:"Afterpains — the uterus contracting back down, triggered by the oxytocin of feeding. Normal, and worse with each baby"},
+    {t:"A sign of retained placenta"},
+    {t:"An infection of the uterus"},
+    {t:"A sign she is not producing enough milk"}],
+ ev:{s:"WHO · LactMed",t:"Ibuprofen and paracetamol are both compatible with breastfeeding — ibuprofen transfers into milk in tiny amounts and is the usual first choice. Undertreated postpartum pain is a recognised contributor to poor sleep, low mood and early breastfeeding cessation, so this is not stoicism worth encouraging."},
+  w:"<span class='t'>Entorts</span> / <span class='t'>entuertos</span>. The same hormone that releases milk contracts the uterus, which is useful — it is what stops the bleeding. They are mild with a first baby and can be genuinely painful with a third. Paracetamol or ibuprofen before a feed helps and both are compatible with breastfeeding."},
+
+{m:"m5",crit:1,
+ qs:["Day 9 at home. She has a splitting headache and blurred vision. What do you think of first?",
+     "Two weeks postpartum, severe headache and visual changes. What is your first thought?"],
+ o:[{t:"Postpartum pre-eclampsia — it occurs after birth too, up to six weeks. Get her assessed now"},
+    {t:"Sleep deprivation and dehydration"},
+    {t:"A side effect of the epidural, which needs no action"},
+    {t:"Normal hormonal readjustment"}],
+ ev:{s:"AJOG 2021 · postpartum readmission cohorts",t:"Median readmission for postpartum pre-eclampsia is around day <span class='num'>6</span> (range 2–15), and roughly <span class='num'>47%</span> of women readmitted with a hypertensive disorder had no such diagnosis in pregnancy. Eclampsia has been documented as late as 8 weeks postpartum. This is a genuine gap in care — she is home, discharged, and nobody is measuring her blood pressure.",c:1},
+  w:"The single most-missed postpartum emergency, because everyone including the family assumes the danger ended with the birth. It can arrive <b>days or weeks</b> after a completely normal delivery, in a woman whose blood pressure was fine throughout pregnancy. Same picture: headache, visual changes, upper abdominal pain, sudden swelling. Do not let 'she's just exhausted' carry the day."},
+
+{m:"m5",crit:1,
+ q:"Which of these postpartum signs means going back to hospital?",
+ o:[{t:"Pain, redness and swelling in one calf, or sudden breathlessness or chest pain"},
+    {t:"Night sweats that soak the sheets in the first week"},
+    {t:"Hair falling out in handfuls at three months"},
+    {t:"Constipation for the first few days"}],
+ ev:{s:"RCOG · MBRRACE-UK",t:"Venous thromboembolism risk runs about 4–5 times higher in pregnancy and peaks in the first 6 weeks after birth, and it remains a leading direct cause of maternal death in high-income countries. Cesarean, immobility, obesity and long journeys all add to it — relevant if you are driving a long way home."},
+  w:"Pregnancy and the postpartum are a high-risk window for clots. A hot, swollen, painful calf suggests <b>DVT</b>; sudden breathlessness or chest pain suggests <b>pulmonary embolism</b> — 112, not a wait-and-see. Drenching night sweats, hair shedding and early constipation are all normal and alarming-sounding."},
+
+{m:"m5",crit:1,
+ qs:["Day 4, she is tearful, overwhelmed and crying over nothing. Is this a problem?",
+     "How do you tell baby blues from postpartum depression?"],
+ o:[{t:"Likely baby blues — peaks around days 3–5 and settles by about two weeks. Beyond that, or with hopelessness, it needs help"},
+    {t:"Definitely postpartum depression — arrange treatment immediately"},
+    {t:"Normal and never requires follow-up whatever happens"},
+    {t:"A sign of a thyroid problem"}],
+ ev:{s:"NICE CG192 · EPDS validation",t:"Postpartum depression affects roughly 10–15% of women; baby blues affects around 50–80% and resolves on its own. The Edinburgh scale (EPDS) is the standard screen and takes two minutes — worth knowing it exists and asking for it, because postnatal follow-up in a busy service often skips mood entirely once the physical checks come back clear."},
+  w:"Baby blues affects most women, coincides with the milk coming in, and <b>resolves</b>. The line to watch: symptoms that persist past two weeks, deepen, stop her functioning or caring for herself, or bring hopelessness or thoughts of harm — that is <span class='t'>depressió postpart</span>, it is common and treatable, and it needs saying out loud. You will notice the trajectory before she does. Ask her directly and tell the midwife."},
+
+{m:"m5",crit:1,
+ q:"In the first two weeks she becomes confused, does not sleep at all, and says things that do not make sense or seem paranoid. What is this?",
+ o:[{t:"Possible postpartum psychosis — a psychiatric emergency. Do not leave her alone with the baby; get help immediately"},
+    {t:"Severe baby blues; give it another week"},
+    {t:"Extreme sleep deprivation; let her sleep it off"},
+    {t:"A normal reaction to a traumatic birth"}],
+ ev:{s:"RCOG · NICE CG192",t:"Onset is typically within the first two weeks and can be dramatically rapid — hours, not days. The highest risk by far is a personal or family history of bipolar disorder or previous puerperal psychosis, which makes it worth knowing that history <b>before</b> the birth. With treatment the prognosis is good; the danger sits almost entirely in delayed recognition.",c:1},
+  w:"Rare — roughly <span class='num'>1–2</span> in 1000 — but a true emergency, with rapid onset usually in the first two weeks: confusion, no need for sleep, elation or agitation, delusions, hallucinations. It carries real risk to mother and baby and it is highly treatable when caught. You are the person most likely to see it first. Emergency services or straight to urgencies; do not wait for morning and do not leave her alone."},
+
+{m:"m5",
+ q:"She is exhausted, pale, dizzy standing up and breathless on the stairs at two weeks. What is likely?",
+ o:[{t:"Postpartum anaemia — worth a blood count and probably iron"},
+    {t:"Normal new-parent tiredness; nothing to check"},
+    {t:"A side effect of breastfeeding"},
+    {t:"Low blood pressure that will resolve on its own"}],
+ ev:{s:"WHO · Cochrane (iron therapy)",t:"Postpartum anaemia affects a substantial minority after normal blood loss and considerably more after haemorrhage. It independently associates with postnatal depression and with poorer cognition and mother-infant interaction — so treating it is a mood intervention as much as a haematological one. Intravenous iron corrects a large deficit far faster than tablets."},
+  w:"<span class='t'>Anèmia postpart</span> is common after significant blood loss and gets written off as 'she's just tired', which delays treatment for weeks. Pallor, breathlessness, palpitations, dizziness on standing, ice craving. It is a blood test and iron. It also worsens mood — treating it helps more than sleep does."},
+
+{m:"m5",
+ q:"What is the correct perineal care in the first days?",
+ o:[{t:"Cold packs for the first 24–48 h, rinse with water after using the toilet, pat dry, change pads often, no tampons"},
+    {t:"Hot baths from day one to encourage healing"},
+    {t:"Antiseptic douches twice daily"},
+    {t:"Keep the stitches covered with a dry dressing"}],
+ w:"Cold first for swelling; warmth later for comfort. Rinse with a jug or bottle of water while urinating, which stops the stinging. Air is good, tampons are out until cleared, and stitches dissolve. Red flags: increasing rather than decreasing pain, foul discharge, fever, or the wound opening."},
+
+{m:"m5",
+ q:"She is exclusively breastfeeding and has no periods. Can she rely on that as contraception?",
+ o:[{t:"Only under strict conditions — fully exclusive feeding, no periods, and under 6 months — and even then it is not certain"},
+    {t:"Yes, breastfeeding is reliable contraception until weaning"},
+    {t:"No, it has no contraceptive effect whatsoever"},
+    {t:"Yes, as long as she is feeding at least twice a day"}],
+ ev:{s:"WHO medical eligibility criteria",t:"With all three conditions strictly met, LAM is around <span class='num'>98%</span> effective — genuinely comparable to many methods. The failure mode is that the conditions erode invisibly: one bottle at night, a longer stretch of sleep, six months quietly passing. Progestogen-only pills, implants and both IUDs are WHO category 1 or 2 while breastfeeding."},
+  w:"That is the <b>LAM</b> method and all three conditions must hold at once: exclusive and frequent feeding including at night, amenorrhoea, and under 6 months. Break any one and it fails. Ovulation returns before the first period, so she can conceive without warning. Progestogen-only methods and the IUD are compatible with breastfeeding; combined oestrogen is usually deferred. Raise it at the postnatal check — it gets forgotten."},
+
+{m:"m5",
+ q:"When can they have sex again?",
+ o:[{t:"When the lochia has stopped and she feels ready — commonly discussed at the check around 4–6 weeks. Lubricant is usually needed"},
+    {t:"After exactly 40 days, no exceptions"},
+    {t:"As soon as she leaves hospital"},
+    {t:"Not until she stops breastfeeding"}],
+ ev:{s:"Observational cohorts",t:"Most couples resume around 6–8 weeks, but dyspareunia is reported by roughly a third of women at 6 months and associates strongly with perineal trauma and with breastfeeding-related low oestrogen. It is treatable — lubricant, and topical oestrogen where needed. It is also very commonly never mentioned at the postnatal check unless someone raises it."},
+  w:"There is no magic date; the markers are bleeding stopped, any tear healed, and — the one that actually matters — she wants to. Breastfeeding keeps oestrogen low, so dryness is near-universal and is not a signal about desire: <b>use lubricant</b>. Contraception from the first time. Expect this to take longer than either of you assumed, and treat that as normal rather than as a problem."},
+
+{m:"m5",
+ q:"You are offered early discharge (alta precoz) at 24–48 hours. What does it involve?",
+ o:[{t:"Going home early with scheduled midwife follow-up, usually a home or clinic visit within the first days"},
+    {t:"Going home with no further follow-up until the six-week check"},
+    {t:"An option only available after a cesarean"},
+    {t:"Discharge against medical advice"}],
+ ev:{s:"Cochrane (Brown) · WHO postnatal care",t:"Early discharge appears safe <b>when postnatal follow-up is actually in place</b> — that condition is doing all the work in every trial. WHO recommends contacts on days 3, 7–14 and at 6 weeks. If your follow-up has not been booked before you walk out, early discharge has quietly become no follow-up."},
+  w:"It is a normal pathway for a straightforward birth, and it is conditional on follow-up being booked. Before you leave, have three things: the <b>appointment</b> with the midwife or ASSIR, the <b>phone number</b> for postnatal advice, and the discharge report. In Catalonia you should also leave with the <span class='t'>Carnet de Salut de l'Infant</span>."},
+
+{m:"m5",
+ q:"Which paperwork has the tightest deadline after the birth?",
+ o:[{t:"Registering the birth — at the hospital within 72 hours, or at the Registro Civil within about 10 days"},
+    {t:"Applying for the baby's passport"},
+    {t:"Choosing a paediatrician"},
+    {t:"Requesting the empadronamiento"}],
+ ev:{s:"Registro Civil · Ley 20/2011",t:"Both parents' ID plus the hospital medical certificate is all it takes, and staff bring the forms to the room. Doing it there rather than later is the highest-value hour of admin in the whole postpartum — the alternative is a Registro Civil appointment with a two-week-old."},
+  w:"The hospital route inside <span class='num'>72</span> h is far easier — staff bring the forms to the room, and you both sign there rather than queueing later with a newborn. <b>Do it before you are discharged.</b> You need both parents' ID and the hospital's medical certificate. Missing it means the Registro Civil within roughly 10 days (extendable with justification)."},
+
+{m:"m5",
+ q:"What else has to be done in the first weeks, administratively?",
+ o:[{t:"Claim the birth benefit from Seguridad Social, get the baby's health card and assign a paediatrician at the CAP"},
+    {t:"Nothing else until the child starts school"},
+    {t:"Only opening a bank account for the child"},
+    {t:"Only notifying your employer"}],
+ ev:{s:"INSS · Seguridad Social, 2026",t:"The <span class='num'>19</span> weeks break down as <span class='num'>6</span> obligatory and continuous immediately after the birth, <span class='num'>11</span> flexible within the first year, and <span class='num'>2</span> additional weeks usable any time until the child turns 8. Paid at 100% of the regulatory base. The 2 extra weeks were added from January 2026 and the INSS has had to run a campaign because people were not claiming them — they are not automatic, you apply."},
+ w:"The list: register the birth; claim the <span class='t'>prestación por nacimiento y cuidado del menor</span> from the INSS (there is a short window — file it promptly rather than at the end of leave); add the baby to a parent's Seguridad Social; get the <span class='t'>tarjeta sanitaria</span> and register at your <span class='t'>CAP</span> for the paediatrician and vaccinations. On leave: as of 2026 it is <span class='num'>19</span> weeks per parent in a two-parent family and <span class='num'>32</span> in a single-parent one."},
+
+{m:"m5",
+ q:"In the first two weeks at home, what is the most useful thing you can do for her?",
+ o:[{t:"Take over everything that is not feeding — and manage the visitors so she is not hosting"},
+    {t:"Encourage her to get back to normal quickly so she does not lose momentum"},
+    {t:"Let her sleep while you take the baby out for long walks"},
+    {t:"Keep the house full of family so she has support"}],
+ ev:{s:"Cochrane 2019 (Bohren) · qualitative synthesis",t:"The evidence on partners specifically is more mixed than the headline continuous-support result: men report feeling their presence mattered, but also feeling unprepared, anxious watching her in pain, and excluded from decisions. The support effect is largest when it comes from someone in a trained doula role — which is an argument for a doula <i>alongside</i> you, not instead of you.",c:1},
+  w:"Two specific jobs. First, everything except feeding is yours: nappies, cooking, laundry, the washing-up, the phone. Second, and less obvious — <b>gatekeeping</b>. A steady stream of visitors means she is hosting, covering up, not feeding topless, not sleeping. Being the one who says 'not today, next week' is a real contribution, and it should be you saying it, not her."},
+
+/* ---------- M6 · NADÓ ---------- */
+{m:"m6",crit:1,
+ qs:["Your 3-week-old feels hot. The thermometer says 38.1 °C. What do you do?",
+     "A baby under 3 months has a temperature of 38 °C. What is the correct action?"],
+ o:[{t:"Go to hospital immediately — any fever of 38 °C or more in a baby under 3 months is an emergency"},
+    {t:"Give infant paracetamol and see how the night goes"},
+    {t:"Undress the baby and recheck in an hour"},
+    {t:"Call the clinic in the morning"}],
+ ev:{s:"AAP 2021 clinical practice guideline",t:"The AAP guideline covers well-appearing infants <span class='num'>8–60</span> days at <span class='num'>38.0 °C</span> or above: urine, blood culture, inflammatory markers, and routine lumbar puncture under 22 days. Babies under 8 days are excluded from the guideline because they are handled <b>more</b> urgently, not less. Rectal is the reference measurement, and a forehead scanner reading near the threshold means go, not re-measure."},
+  w:"Learn this one cold. Under three months, a baby's immune system cannot wall off an infection, and <span class='num'>38 °C</span> can mean sepsis, meningitis or a urinary infection in a baby who otherwise looks fine. It is a full septic work-up, not a wait. Never give paracetamol to mask it first. Buy a thermometer <b>before</b> the birth and know how it works."},
+
+{m:"m6",crit:1,
+ q:"Which of these newborn signs means going in straight away?",
+ o:[{t:"Grunting with each breath, nostrils flaring, or skin sucking in between the ribs"},
+    {t:"Sneezing, hiccups and irregular breathing during sleep"},
+    {t:"Crying for 40 minutes in the evening"},
+    {t:"Startling with arms flung out when a door bangs"}],
+ ev:{s:"NICE · traffic-light system",t:"The red flags to memorise are behavioural as much as physical: a weak or continuous high-pitched cry, difficulty rousing, reduced responsiveness. A non-blanching rash — one that stays visible when you press a clear glass onto it — is meningococcal until proven otherwise. Parental instinct that something is badly wrong is itself a documented predictor; say so explicitly at triage."},
+  w:"Grunting, flaring and recession are <b>respiratory distress</b>. Add to that list: blue lips or tongue, floppiness, won't wake to feed, refusing feeds, a bulging fontanelle, a seizure, green vomit (bile — a surgical emergency), no wet nappy in 12 hours, or a rash that does not fade under a pressed glass. Sneezing, hiccups, periodic breathing and the startle reflex are all normal and all frightening the first time."},
+
+{m:"m6",crit:1,
+ q:"The baby is yellow on day 3. When is jaundice a problem?",
+ o:[{t:"If it appears in the first 24 hours, reaches the legs and feet, makes the baby too sleepy to feed, or lasts beyond two weeks"},
+    {t:"Any yellow colouring at all is an emergency"},
+    {t:"Only if the baby also has a fever"},
+    {t:"Only after one month of age"}],
+ ev:{s:"AAP 2022 hyperbilirubinaemia guideline · NICE CG98",t:"Around 60% of term babies become visibly jaundiced and the great majority need nothing. Visual assessment is unreliable — particularly on darker skin — so a measurement beats an opinion, and both a transcutaneous meter and a blood level are quick. Phototherapy thresholds are plotted against the baby's exact age in hours, which is why 'a bit yellow on day 3' cannot be judged from a photo."},
+  w:"<span class='t'>Icterícia</span> is common, appears around day <span class='num'>2–3</span>, peaks about day <span class='num'>4–5</span> and fades. The danger flags: <b>within the first 24 hours</b>, spreading down to the legs and feet, a baby too drowsy to feed, or persisting past two weeks. Frequent feeding clears bilirubin — a sleepy jaundiced baby who is not feeding is the worrying combination, because it feeds back on itself."},
+
+{m:"m6",
+ q:"Day 1. She is producing only a few millilitres of colostrum per feed. Is that a problem?",
+ o:[{t:"No — that is exactly right. A newborn's stomach holds about a teaspoon, and colostrum is concentrated"},
+    {t:"Yes, top up with formula until the milk comes in"},
+    {t:"Yes, she should pump every two hours to increase it"},
+    {t:"Yes, it means the milk will never come in properly"}],
+ ev:{s:"WHO · BFHI · ABM protocols",t:"Total colostrum across the whole of day 1 is roughly 30–60 mL, and weight loss up to 7–10% is expected. The critical window is real: supplementing without indication in the first days measurably reduces breastfeeding duration — while genuine medical indications for supplementing do exist and are well defined. The distinction to hold is <i>indicated</i> versus <i>reassurance-driven</i>."},
+  w:"The most useful fact you can carry into that hospital room. A day-1 stomach holds roughly <span class='num'>5–7</span> ml — cherry-sized. <span class='t'>Calostre</span> is low-volume, high-antibody, and the small amount is the design, not a failure. Milk comes in around day <span class='num'>2–5</span>. Your job is to say this calmly when she or, more likely, a relative starts talking about topping up on day one."},
+
+{m:"m6",
+ q:"How do you know the latch is right?",
+ o:[{t:"Wide-open mouth, more areola visible above than below, chin pressed into the breast, flanged lips, audible swallowing, no ongoing pain"},
+    {t:"The baby's lips are neatly closed around the nipple like a straw"},
+    {t:"The feed lasts at least 20 minutes on each side"},
+    {t:"There is a strong initial pain that she gets used to"}],
+ ev:{s:"ABM · Cochrane (tongue-tie)",t:"Pain plus damage is the classic presentation of a shallow latch, and skilled in-person help beats any leaflet or video. On tongue-tie the evidence is genuinely unsettled: frenotomy reliably reduces maternal nipple pain in the short term, but trials have not consistently shown better breastfeeding duration, and it is over-diagnosed in some settings. Get an experienced assessment before agreeing to a procedure.",c:1},
+  w:"Asymmetric latch: the baby takes a big mouthful of breast, off-centre, chin first. <b>Ongoing pain is not normal</b> and it is almost always a latch problem, sometimes a tongue-tie — not something to endure. Cracks, bleeding and dread of the next feed are the route to giving up. Get help from the midwife or an <span class='t'>ATLA</span> lactation consultant early, not after three weeks."},
+
+{m:"m6",
+ q:"How do you know the baby is getting enough milk?",
+ o:[{t:"Wet and dirty nappies, the stool turning yellow by about day 4–5, and weight regained by around day 10–15"},
+    {t:"The baby sleeps four hours between feeds"},
+    {t:"She can feel the breast is full before each feed"},
+    {t:"The baby feeds for exactly 15 minutes each side"}],
+ ev:{s:"WHO growth standards · ABM",t:"The WHO charts are the right reference and they are built from breastfed babies — older charts based on formula-fed infants make normal breastfed growth look like faltering around 3–6 months. Check which chart is in use. Weight is one data point among several, not the verdict."},
+  w:"Output, not input. By day 5 expect <span class='num'>5–6</span> or more wet nappies a day, and stools moving black meconium → green transitional → yellow seedy. A loss of up to <span class='num'>7–10</span>% in the first days is normal, with birth weight back by two weeks. Long sleeps in a newborn are a warning sign, not success, and a soft breast after the first weeks just means supply has regulated."},
+
+{m:"m6",
+ q:"At three weeks the baby suddenly wants to feed constantly and seems unsatisfied. What is happening?",
+ o:[{t:"A growth spurt — the baby is signalling for more supply. It settles in a few days if she keeps feeding on demand"},
+    {t:"Her supply has failed and formula is needed"},
+    {t:"The milk has become too thin"},
+    {t:"The baby is ill and needs checking"}],
+ ev:{s:"ABM · observational",t:"Cluster feeding and evening fussing are well described and normal, though the tidy 15-day / 6-week / 3-month timetable is clinical folklore rather than trial-derived — real babies do not read the calendar. The principle is the useful part: frequent feeding raises supply within 24–72 h, and this is the commonest point at which breastfeeding is abandoned for a reason that was never real."},
+  w:"The <span class='t'>crisis de lactància</span> — around 15–20 days, 6–7 weeks and 3 months. Cluster feeding is how a baby orders more milk, and supply responds within a couple of days. It arrives exactly when everyone is most tired and it is the number-one point at which breastfeeding gets abandoned unnecessarily. Knowing the timetable in advance is most of the defence; your other job is deflecting 'she hasn't got enough milk' from relatives."},
+
+{m:"m6",
+ q:"She has a hard, red, painful wedge on one breast plus fever and aches. What is it and what helps?",
+ o:[{t:"Mastitis — keep emptying that breast, rest, pain relief, and see a professional; antibiotics if no better in about 24 h"},
+    {t:"Mastitis — stop feeding from that breast until it resolves"},
+    {t:"Normal engorgement; no action needed"},
+    {t:"A blocked duct that must be massaged hard to break it up"}],
+ ev:{s:"ABM Protocol #36 (2022) · revised guidance",t:"The 2022 protocol changed this advice materially: mastitis is now framed as inflammation of the ductal system rather than simple milk stasis. Out went aggressive deep massage, heat and 'emptying' the breast — all of which worsen oedema. In came ice, ibuprofen, gentle lymphatic stroking, and feeding normally rather than extra pumping. If you read older advice telling her to pound the lump, it is out of date.",c:1},
+  w:"<span class='t'>Mastitis</span> feels like flu with a sore breast. The treatment is <b>keeping the milk moving</b> — stopping makes it worse and risks an abscess. Feed from that side, rest properly, ibuprofen, cold after feeds. Current advice is gentle handling rather than aggressive deep massage, which worsens inflammation. If there is no improvement in about 24 hours, she needs antibiotics."},
+
+{m:"m6",crit:1,
+ q:"What are the rules for safe infant sleep?",
+ o:[{t:"On the back, on a firm flat surface of their own, nothing loose in the cot, in your room for 6 months, not overheated, no smoking"},
+    {t:"On the side, propped with a rolled towel so they do not choke"},
+    {t:"On the front, which helps with wind and reflux"},
+    {t:"Wherever they fall asleep, as long as someone is nearby"}],
+ ev:{s:"AAP 2022 vs UNICEF UK · guidelines disagree",t:"Room-sharing without bed-sharing cuts SIDS risk by up to 50%. But the bodies split on bed-sharing: AAP says never, under any circumstances; UNICEF UK and most European guidance give <b>safer bed-sharing</b> advice instead, reasoning that an absolute ban pushes exhausted parents into feeding on sofas and armchairs — far more dangerous than a prepared bed. Both agree completely about the sofa. Decide your household rule now, while you are rested.",c:1},
+  w:"<b>Back to sleep</b>, every sleep, including naps — this alone cut cot deaths dramatically. Firm flat mattress, no pillows, bumpers, duvets or toys. Room-sharing without bed-sharing for at least 6 months. Never sleep with the baby on a <b>sofa or armchair</b> — that is the highest-risk situation of all, and it is exactly where an exhausted parent nods off at 4 a.m. Set the rule now, while you are both rational."},
+
+{m:"m6",crit:1,
+ q:"The car seat for the drive home — what matters?",
+ o:[{t:"Rear-facing, in the back, never in front of an active airbag, harness snug with no bulky coat underneath"},
+    {t:"Front seat so you can both see the baby"},
+    {t:"Forward-facing is fine as long as the harness is tight"},
+    {t:"Wrapped in a thick blanket and coat inside the harness for warmth"}],
+ ev:{s:"UN R129 (i-Size) · DGT",t:"Rear-facing to at least 15 months is mandatory under i-Size, and the Swedish data behind extended rear-facing to age 4 shows large reductions in serious injury. The coat problem is measurable rather than theoretical: crash testing shows a bulky coat can leave several centimetres of harness slack. Spanish law requires a restraint and a rear seat under 135 cm."},
+  w:"Rear-facing for as long as the seat allows — a newborn's neck cannot take a frontal impact otherwise. In Spain children under <span class='num'>135</span> cm must use a restraint and sit in the back. A coat or snowsuit compresses in a crash and leaves the harness loose: dress the baby thin, harness them, then blanket <b>over the top</b>. Install and practise the seat <b>weeks before</b> — do not meet it for the first time in the hospital car park."},
+
+{m:"m6",
+ q:"Which of these normal newborn findings alarms parents unnecessarily?",
+ o:[{t:"Orange-pink 'brick dust' in the nappy in the first days, swollen breasts or genitals, and a little vaginal bleeding in girls"},
+    {t:"A bulging, tense fontanelle when the baby is calm and upright"},
+    {t:"Refusing to feed for 12 hours"},
+    {t:"Bright green vomit"}],
+ ev:{s:"AAP · routine newborn examination",t:"Erythema toxicum affects up to half of term newborns, looks alarming — blotchy red patches with yellow-white centres — and needs nothing at all. Being able to name these confidently saves several 3 a.m. panics, and more importantly keeps your alarm calibrated for the findings that genuinely matter."},
+  w:"Normal and alarming: urate crystals staining the nappy pink-orange in the first days, breast swelling and pseudo-menstruation from the mother's hormones, milia, erythema toxicum, peeling skin, a cone-shaped head after birth, crossed eyes, sneezing. Genuinely not normal: a bulging fontanelle at rest, refusing feeds, and green vomit — all three are on the go-in list."},
+
+{m:"m6",
+ q:"How do you care for the umbilical stump?",
+ o:[{t:"Keep it clean and dry, fold the nappy down below it, and let it fall off on its own at around 5–15 days"},
+    {t:"Clean it with alcohol at every nappy change"},
+    {t:"Cover it with a dressing to protect it"},
+    {t:"Pull it gently once it starts to loosen"}],
+ ev:{s:"WHO · Cochrane (Imdad)",t:"In high-income settings with clean birth conditions, dry cord care matches antiseptics and the cord separates sooner. WHO recommends chlorhexidine only where neonatal mortality is high. Omphalitis is rare here but progresses fast — redness spreading onto the abdominal wall is the sign that matters."},
+  w:"Dry cord care is current practice — water and air, no alcohol or antiseptic unless told otherwise. A slightly sticky or smelly last day or two as it separates is common. Go in if there is <b>redness spreading onto the abdominal skin</b>, pus, bleeding that does not stop, or fever: that is omphalitis and it moves fast in a newborn."},
+
+{m:"m6",
+ q:"It is August and 34 °C. What are the rules for a 3-week-old?",
+ o:[{t:"No direct sun, no sunscreen under 6 months — use shade and clothing — more frequent feeds rather than water, never left in a car"},
+    {t:"Sunscreen everywhere before going out"},
+    {t:"Cooled boiled water between feeds to keep them hydrated"},
+    {t:"Short periods of direct sun for vitamin D"}],
+ ev:{s:"AEP · AAP",t:"Under 6 months infant skin has a high surface-area-to-weight ratio and a thin barrier, so systemic absorption of sunscreen is a genuine concern and shade is the recommendation. Water is actively dangerous — infant kidneys cannot excrete a free-water load, and water intoxication causes hyponatraemic seizures. In heat the answer is always more milk, never water."},
+  w:"Under <span class='num'>6</span> months the skin is too thin and permeable for sunscreen, so the answer is shade, a hat, long thin sleeves and staying in at midday. Hydration comes from <b>more frequent milk feeds</b> — water is dangerous under 6 months and can cause hyponatraemia. Never leave the baby in a parked car, not even briefly. Watch for a hot, floppy, non-feeding baby with dry nappies."},
+
+{m:"m6",
+ q:"How should the baby be dressed indoors?",
+ o:[{t:"About one layer more than you are wearing — check the back of the neck, not the hands"},
+    {t:"Two or three extra layers, because babies cannot regulate temperature"},
+    {t:"The same as you"},
+    {t:"Always with a hat on indoors"}],
+ ev:{s:"AAP 2022 safe sleep",t:"Overheating is an established and independent SIDS risk factor, which is why the guidance runs one way: err cool. Hats indoors after the first hours interfere with heat loss through the head. Weighted sleep sacks and weighted swaddles are explicitly <b>not</b> recommended."},
+  w:"One layer more, and judge by the <b>nape of the neck or the chest</b> — hands and feet run cool and blueish on a perfectly warm baby, which is what sends most new parents reaching for another blanket. Overheating is a cot-death risk factor, so err cool rather than warm, especially for sleep. Hats indoors are unnecessary after the first hours."},
+
+{m:"m6",
+ q:"When and how should the baby be bathed?",
+ o:[{t:"Not every day — the first bath is usually delayed around 24 hours, and the water should be about 37 °C"},
+    {t:"Immediately after birth, to clean off the vernix"},
+    {t:"Daily from day one, with soap, to establish a routine"},
+    {t:"Only after the umbilical stump has fallen off"}],
+ ev:{s:"WHO · delayed bathing trials",t:"WHO recommends delaying the first bath by at least 24 hours. Trials show better thermal stability, less hypoglycaemia and higher exclusive breastfeeding at discharge — a genuinely free intervention, and one a busy ward will often do early out of routine unless you ask."},
+  w:"Delaying the first bath keeps the <span class='t'>vèrnix</span> — which protects the skin and helps thermoregulation — and supports early breastfeeding. After that, two or three baths a week is plenty; daily washing dries newborn skin. Water at about <span class='num'>37 °C</span>, tested with your elbow or a thermometer, and <b>never</b> leave them alone in water for any reason."},
+
+{m:"m6",
+ q:"Vitamin D for the baby — what is recommended?",
+ o:[{t:"A daily supplement of 400 IU from the first days, particularly for breastfed babies"},
+    {t:"Nothing; breast milk provides enough"},
+    {t:"Only in winter"},
+    {t:"Only if the baby looks pale"}],
+ ev:{s:"AEP · AAP · ESPGHAN",t:"400 IU daily for all breastfed and partially breastfed infants through the first year. Rickets from deficiency still occurs in Spain, chiefly in exclusively breastfed babies never started on drops. It is the supplement most often prescribed at discharge and never actually bought."},
+  w:"Breast milk is low in vitamin D and babies under 6 months should not be in direct sun, so a daily <span class='num'>400</span> IU supplement is recommended from the first days and continued through the first year. It is cheap, it is drops, and it is the supplement most often forgotten in the chaos of the first fortnight."},
+
+{m:"m6",
+ q:"The hearing screen comes back as 'refer' on one ear. What does that mean?",
+ o:[{t:"The test needs repeating — most refers turn out normal, often just fluid or a restless baby"},
+    {t:"The baby is deaf in that ear"},
+    {t:"The test cannot be repeated and hearing is assessed later in childhood"},
+    {t:"It means an infection is present"}],
+ ev:{s:"JCIH 1-3-6 benchmark",t:"The international standard: screen by <span class='num'>1</span> month, diagnose by <span class='num'>3</span>, intervene by <span class='num'>6</span> — because language outcomes for children identified and aided by 6 months are dramatically better. Permanent hearing loss affects roughly 1–2 per 1000 newborns, so most refers are indeed false positives — but the follow-up appointment is the one not to let slide."},
+  w:"<span class='t'>Cribratge auditiu</span> uses otoacoustic emissions and is very sensitive, so residual fluid, vernix in the canal or a wriggling baby all produce a refer. The protocol is a repeat, then fuller testing if needed. Take the repeat appointment seriously and go — but do not spend the week in between assuming the worst."},
+
+{m:"m6",
+ q:"What can you usefully do for feeding if she is breastfeeding?",
+ o:[{t:"Bring her water and food at every feed, wind and change the baby, do skin-to-skin, and take the baby after feeds so she sleeps"},
+    {t:"Give a bottle at night so she gets a full night's sleep from the start"},
+    {t:"Time the feeds and keep a record of how long each side takes"},
+    {t:"Wake the baby to a four-hourly schedule so feeds are predictable"}],
+ ev:{s:"Cochrane (Schmied) · partner support trials",t:"Partner support is one of the strongest modifiable predictors of whether breastfeeding continues, and interventions that educate the partner measurably improve duration. The mechanism is unglamorous: practical relief, and not being the person who suggests formula when things get hard at 2 a.m."},
+  w:"You cannot do the feeding, so do everything around it — she will be pinned to a chair for hours a day, thirsty and hungry, and getting her a glass of water is not a small contribution. Early scheduled bottles undermine supply and nipple confusion while feeding is being established; the useful version of that idea comes later. Feed on demand — <span class='num'>8–12</span> times in 24 hours, with cues (rooting, hands to mouth, stirring) rather than the clock. <b>Crying is a late cue</b>."},
+
+/* ---------- added from independent evidence, not in the course ---------- */
+{m:"m1",crit:1,
+ q:"You are ringing the hospital at 3 a.m. What should you have ready to say?",
+ o:[{t:"Weeks of gestation, contraction frequency and duration over the last hour, whether the waters have gone and what colour, fetal movements, and any bleeding"},
+    {t:"That she is in a lot of pain and you are coming in"},
+    {t:"Her full medical history from the start of the pregnancy"},
+    {t:"Only the contraction timings — they will ask about the rest"}],
+ ev:{s:"Triage practice · SBAR handover",t:"Midwife triage is a decision made almost blind, from what you say. Those five items are what the decision actually turns on, and reading them out in that order gets a faster and better answer than a description of how she seems. Have her maternity notes or hospital card in front of you, and say at the start if she is <b>GBS positive</b>, has had a <b>previous cesarean</b>, or a <b>previous fast labour</b> — each one changes the advice you get."},
+ w:"Write these on the same card as the hospital number: <b>weeks</b>, <b>contractions</b> (frequency, duration, for how long), <b>waters</b> (gone or not, time, colour), <b>movements</b> (normal or reduced), <b>bleeding</b> (none, streaky, or fresh). If she is in too much pain to talk, you are the one giving the handover — and 'she's in a lot of pain' tells triage almost nothing."},
+
+{m:"m2",
+ qs:["What is the single best-evidenced thing that improves a birth outcome — and who provides it?",
+     "Which labour intervention has the strongest evidence behind it, with no identified harms?"],
+ o:[{t:"Continuous one-to-one support through labour — and the effect is strongest from a trained doula, larger than from a partner alone"},
+    {t:"An epidural sited as early as possible"},
+    {t:"Continuous electronic fetal monitoring throughout"},
+    {t:"Arriving at hospital early so she is monitored for longer"}],
+ ev:{s:"Cochrane 2017 (Bohren) · 27 trials, 15,858 women",t:"Continuous support increased spontaneous vaginal birth and shortened labour, while reducing cesareans, instrumental births, any analgesia, regional analgesia, low 5-minute Apgar scores and negative memories of the birth — <b>with no identified harms</b>. The subgroup analysis is the uncomfortable part: benefits were largest when support came from someone in a doula role, smaller from hospital staff, and smaller again from the woman's own network — which includes you.",c:1},
+ w:"This is the most important single finding in this whole drill, and it slightly demotes you. Being present is good; being present <b>continuously and competently</b> is what carries the effect, and a trained doula does it better than an anxious first-time partner — because she has seen it a hundred times and you have not. Two honest conclusions: consider a doula <i>alongside</i> you rather than instead of you, and if that is not an option, close the gap by knowing what to do. That is what this quiz is for."},
+
+{m:"m2",
+ q:"Which combination genuinely lowers her chance of an unplanned cesarean?",
+ o:[{t:"Continuous support, staying home through early labour, staying mobile and off her back, and intermittent rather than continuous monitoring in a low-risk labour"},
+    {t:"Arriving at the hospital as early as possible and staying on the monitor"},
+    {t:"Avoiding the epidural at all costs"},
+    {t:"Requesting an induction at 39 weeks"}],
+ ev:{s:"Cochrane · pooled across several reviews",t:"Each element has its own trial base: continuous support (Bohren 2017), delayed admission in latent labour (Kobayashi 2017), upright and mobile positions (Lawrence 2013, Gupta 2017), and intermittent auscultation over continuous CTG in low-risk labour (Alfirevic 2017). Note what is <b>not</b> on the list: avoiding the epidural, which does not affect cesarean rate at all.",c:1},
+ w:"Worth knowing precisely, because the folk advice is wrong in both directions. Refusing an epidural does <b>not</b> reduce her cesarean risk — that myth causes real, pointless suffering. Meanwhile the four things that do help are unglamorous and mostly free, and three of the four are things you can actively influence on the night."},
+
+{m:"m3",
+ q:"There is one free thing you can ask for during pushing that reduces serious tearing. What is it?",
+ o:[{t:"A warm compress held against the perineum while she pushes"},
+    {t:"An episiotomy, to control where the tear goes"},
+    {t:"Having her hold her breath and push as hard as possible"},
+    {t:"Lying flat so the midwife can see clearly"}],
+ ev:{s:"Cochrane 2024 (Dwan) · perineal techniques",t:"Warm compress likely reduces third- or fourth-degree tears (RR <span class='num'>0.46</span>, moderate-certainty evidence) and likely produces a large reduction in perineal pain. Perineal massage in the second stage has weaker and less certain evidence. Routine episiotomy is the opposite of protective — restrictive use reduces severe trauma by around 30%."},
+ w:"Cheap, simple, well-evidenced, and frequently skipped when a room is busy. Put it in the birth plan and ask again during second stage. Worth pairing with the other two: <b>upright rather than flat</b>, and not prolonged breath-holding — spontaneous pushing with her own urges is associated with less perineal trauma than being coached to hold and bear down."},
+
+{m:"m4",
+ qs:["Someone raises inducing at 39 weeks even though everything is normal. What do you know?",
+     "Is elective induction at 39 weeks in a healthy first pregnancy a good idea?"],
+ o:[{t:"It is genuinely contested — a major US trial found fewer cesareans, but it has been heavily criticised and European practice mostly still waits for 41 weeks"},
+    {t:"It clearly causes more cesareans and should always be refused"},
+    {t:"It is settled best practice everywhere and should be accepted"},
+    {t:"It is illegal in Spain before 41 weeks"}],
+ ev:{s:"ARRIVE 2018, NEJM · 6106 women · disputed",t:"ARRIVE randomised low-risk first-time mothers to induction at 39 weeks or expectant management and found a <b>lower</b> cesarean rate with induction (18.6% vs 22.2%), overturning the prior assumption. The criticisms are substantial: only 27% of eligible women agreed to take part, the expectant arm may not reflect European practice, and staffing patterns differ. ACOG says it is a reasonable option to offer; most European systems have not adopted it as routine.",c:1},
+ w:"The point of this question is not the answer — it is recognising a <b>live scientific disagreement</b> when it is presented to you as settled. Both 'induction causes cesareans' and 'induction at 39 weeks prevents them' will be stated to you as fact during this pregnancy, by confident people. Here the honest position is genuinely uncertain, which makes it exactly the kind of decision to make deliberately with your midwife rather than absorb from whoever spoke last."},
+
+{m:"m5",crit:1,
+ qs:["What is the risk to your own mental health in the first year, and what predicts it?",
+     "How common is depression in the non-birthing partner after a baby?"],
+ o:[{t:"Around 8% across the first year, rising to roughly 25% at 3–6 months — and the strongest single predictor is her depression"},
+    {t:"Effectively zero — postnatal depression only affects the person who gave birth"},
+    {t:"Around 1%, and only after a traumatic birth"},
+    {t:"It is common but resolves by itself within a month, always"}],
+ ev:{s:"Meta-analyses of paternal perinatal depression",t:"Pooled prevalence sits near <span class='num'>8%</span> from pregnancy through the first year, with the 3–6 month window considerably higher. The EPDS is the usual screening tool but was validated on women and under-detects the way it commonly presents in men — irritability, anger, withdrawal, overworking, drinking — rather than visible sadness. Risk factors: her depression, poor sleep, low social support, relationship strain, financial pressure.",c:1},
+ w:"Nobody screens you, nobody asks, and there is no appointment where this comes up. Two things follow. First, the couple risk is correlated — if she is struggling, your own odds roughly double, so the two of you going down together is the common pattern rather than the rare one. Second, look for the male-pattern presentation in yourself: not crying, but snapping, checking out, staying late at work, drinking more. Tell your GP, not just your friends."},
+
+{m:"m6",crit:1,
+ qs:["At 4 a.m. she is falling asleep feeding. What is the safest thing to do, and what do the guidelines actually say?",
+     "Where do the guidelines disagree on bed-sharing, and where do they agree completely?"],
+ o:[{t:"Get her into the bed with it prepared — the guidelines split on bed-sharing, but all of them agree you must never fall asleep with the baby on a sofa or armchair"},
+    {t:"Feed on the sofa, so she does not disturb you in the bed"},
+    {t:"Feed in an armchair, which is safer than a bed because she cannot roll over"},
+    {t:"Keep her awake by any means necessary until the feed ends"}],
+ ev:{s:"AAP 2022 vs UNICEF UK · genuine disagreement",t:"AAP: never bed-share, under any circumstances. UNICEF UK and most European guidance: give <b>safer bed-sharing</b> advice instead — firm flat mattress, no pillows or duvet near the baby, baby on their back, no smoking, no alcohol, drugs or extreme exhaustion, not premature or low birth weight. Their reasoning is that an absolute prohibition does not stop exhausted parents falling asleep; it just relocates them to the sofa. Sofa or armchair sleeping carries a many-fold higher risk than a prepared bed, and every guideline on earth agrees on that one.",c:1},
+ w:"This is the most practically important disagreement in the whole drill, because the situation is guaranteed to happen to you. The failure mode is not choosing to bed-share — it is <b>ending up</b> asleep somewhere unplanned. So decide the rule while you are both rested: if she is feeding at night and might fall asleep, she does it in the bed with the bed prepared, never in the chair or on the sofa. Read your own guidance, pick your household's line, and make it a rule rather than a 4 a.m. judgement call."}
+];
+
+/* ============ REFERENCE CARD ============ */
+const REF = [
+ {h:"Before you trust any of this",
+  i:["General protocol for the Catalan / Spanish public system, with the independent evidence noted on each answer. <b>Your midwife and your hospital's own instructions override every line here.</b>",
+     "Confirm the contraction threshold, the hospital's direct phone number and the GBS result at the next visit, and write theirs down.",
+     "Progress is stored on this device only. It is not uploaded anywhere."]},
+ {h:"Call 112 — do not drive",
+  i:["<b>Cord visible or felt</b> in the vagina after the waters break. Knees-to-chest, bottom up, do not touch the cord.",
+     "<b>Heavy bright-red bleeding</b>, especially with a uterus that stays hard between contractions.",
+     "<b>Seizure</b>, collapse, or unresponsiveness.",
+     "Sudden <b>breathlessness or chest pain</b> — before or after the birth."]},
+ {h:"Go in now — any hour",
+  i:["<b>Reduced fetal movements.</b> Never wait until morning.",
+     "Waters <b>green, brown or foul-smelling</b> — meconium.",
+     "<b>Fever 38 °C</b> or above.",
+     "<b>Headache + visual flashes + pain under the ribs</b> + sudden swelling — pre-eclampsia. <b>Also applies for six weeks after the birth.</b>",
+     "Regular contractions <b>before 37 weeks</b>.",
+     "Waters broken — call even with no contractions. Note <b>time, colour, smell, amount</b>.",
+     "<b>GBS positive</b> — go early, she needs IV antibiotics at least 4 h before birth."]},
+ {h:"Contractions — the threshold",
+  i:["First baby: every <span class='n'>5</span> min · <span class='n'>60</span> s long · for <span class='n'>1–2</span> hours.",
+     "Time <b>start to start</b>, never end to start.",
+     "Go earlier if: not her first, a previous fast labour, you live far, or GBS positive.",
+     "<b>Write your hospital's own number here</b> — ask at the next visit."]},
+ {h:"In the room — your jobs",
+  i:["Never speak to her <b>during</b> a contraction. Questions and decisions go in the gap.",
+     "Water every contraction or two. Toilet <b>every hour</b> — a full bladder stalls labour.",
+     "Prompt a position change every 20–30 min. Keep her off her back.",
+     "Ask for the shower or pool early; it is the strongest drug-free relief.",
+     "Nitrous oxide: <b>she holds the mask, never you.</b> Start inhaling at the first sign of the contraction.",
+     "Shaking, vomiting, 'I can't do this' around 8–9 cm = <b>transition</b>. She is nearly there. Say so."]},
+ {h:"Before you consent to anything",
+  i:["<b>'Is this an emergency, or do we have time to talk?'</b> — ask it every time.",
+     "Then <b>BRAN</b>: Benefits · Risks · Alternatives · what if we do Nothing for now."]},
+ {h:"At the birth",
+  i:["<b>Delayed cord clamping</b> — at least 1–3 min, or until it stops pulsing.",
+     "<b>Skin-to-skin, uninterrupted, first hour.</b> If she can't — cesarean, stitching, bleeding, asleep — <b>you do it, bare chest.</b> Wear a shirt that opens at the front.",
+     "Ask for weighing, measuring, the bath, and the eye ointment to wait an hour.",
+     "Vitamin K and erythromycin ointment: decide in advance.",
+     "Watch her bleeding. Pad soaked in <b>under an hour</b>, big clots, dizziness, grey skin → press the bell."]},
+ {h:"Before you leave the hospital",
+  i:["<b>Register the birth at the hospital, within 72 h</b> — far easier than the Registro Civil later. Bring both IDs.",
+     "Book the midwife / ASSIR follow-up visit.",
+     "Take the postnatal advice phone number.",
+     "Discharge report and the <b>Carnet de Salut de l'Infant</b>.",
+     "Then: INSS birth benefit, the baby's tarjeta sanitaria, and a paediatrician at your CAP."]},
+ {h:"At home — her",
+  i:["Lochia going <b>back</b> to heavy fresh red, or smelling foul → get checked.",
+     "Fever 38 °C · soaking a pad in an hour · hot painful calf · breathlessness → go in.",
+     "<b>Pre-eclampsia still happens after the birth</b> — headache and visual changes at day 9 is not 'just tired'.",
+     "Tearful days 3–5 = baby blues. Past two weeks, or hopelessness → that is depression, tell the midwife.",
+     "Confusion, no sleep at all, paranoia, hallucinations in the first two weeks → <b>emergency, do not leave her alone with the baby.</b>",
+     "Exhausted, pale, dizzy, breathless → ask for a blood count. Postpartum anaemia is missed constantly."]},
+ {h:"At home — the baby",
+  i:["<b>38 °C under 3 months = hospital now.</b> No paracetamol first. Own a thermometer before the birth.",
+     "Grunting · flaring nostrils · ribs sucking in · blue lips · floppy · won't wake to feed · green vomit · bulging fontanelle · no wet nappy in 12 h → go in.",
+     "Jaundice: worrying if <b>in the first 24 h</b>, down to the legs and feet, too sleepy to feed, or past two weeks.",
+     "Cord: redness spreading onto the belly, pus, or fever → go in.",
+     "Sleep: <b>on the back</b>, own firm flat surface, nothing loose, your room for 6 months. <b>Never on a sofa or armchair.</b>",
+     "Car seat: rear-facing, in the back, no airbag, <b>no coat under the harness</b>. Fit it weeks in advance."]},
+ {h:"Where the independent evidence comes from",
+  i:["<b>Cochrane</b> systematic reviews — labour support, water immersion, CTG monitoring, skin-to-skin, perineal techniques, epidural, birth position, third stage.",
+     "<b>WHO</b> — intrapartum and postnatal care, cord clamping, the Baby-Friendly Hospital Initiative.",
+     "<b>NICE</b> and <b>RCOG</b> Green-top guidelines (UK).",
+     "<b>ACOG</b> and <b>SMFM</b> (US obstetrics), <b>AAP</b> (newborn care, safe sleep, febrile infants).",
+     "<b>ABM</b> protocols for breastfeeding — including the rewritten 2022 mastitis guidance.",
+     "Spanish: <b>SEGO</b>, <b>AEP</b>, and the Ministry's <b>Estrategia de Atención al Parto Normal</b>.",
+     "Where these bodies genuinely disagree the question is tagged <b>Guidelines disagree</b> — drill those with the <b>Contested</b> filter."]},
+ {h:"Feeding — hold the line",
+  i:["Day 1 colostrum is <span class='n'>5–7</span> ml a feed. The stomach is cherry-sized. <b>That is correct, not a shortage.</b>",
+     "Milk comes in day <span class='n'>2–5</span>. Feed on demand, <span class='n'>8–12</span> times in 24 h.",
+     "<b>Pain means a bad latch</b>, not toughness. Get ATLA or the midwife early.",
+     "Enough milk = <span class='n'>5–6</span>+ wet nappies by day 5, yellow seedy stools by day 4–5, birth weight back by day 10–15.",
+     "Constant feeding at ~15–20 days, 6–7 weeks, 3 months = <b>growth spurt</b>, not failure. Deflect the relatives.",
+     "Red wedge + fever = mastitis. <b>Keep feeding from that side.</b> No improvement in 24 h → antibiotics.",
+     "Vitamin D <span class='n'>400</span> IU daily from the first days."]}
+];
+
+/* ============ STATE ============ */
+const KEY = "parto.progress.v1";
+const MASTERY = 2;
+let stats = {};
+let saveTimer = null;
+
+let scope = "all";        // "all" | module key
+let filter = null;        // null | "crit" | "weak"
+let queue = [];
+let cur = null, curOpts = null, answered = false, wasRight = false;
+let sessionSeen = 0, sessionRight = 0;
+
+BANK.forEach((q, i) => { q.id = "q" + i; });
+
+function st(id){ return stats[id] || (stats[id] = {s:0, seen:0, miss:0}); }
+function mastered(id){ return st(id).s >= MASTERY; }
+
+function load(){
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(KEY) || "null"); } catch(e){}
+  if (d && typeof d === "object") stats = d;
+}
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(KEY, JSON.stringify(stats)); } catch(e){}
+  }, 250);
+}
+
+function pool(){
+  let p = BANK.filter(q => scope === "all" || q.m === scope);
+  if (filter === "crit") p = p.filter(q => q.crit);
+  if (filter === "contested") p = p.filter(q => q.ev && q.ev.c);
+  if (filter === "weak") p = p.filter(q => st(q.id).miss > 0 && !mastered(q.id));
+  return p;
+}
+function build(){
+  const p = pool().filter(q => !mastered(q.id));
+  for (let i = p.length - 1; i > 0; i--){ const j = (Math.random() * (i + 1)) | 0; [p[i], p[j]] = [p[j], p[i]]; }
+  p.sort((a, b) => st(b.id).miss - st(a.id).miss || 0);
+  queue = p;
+}
+
+/* ============ RENDER ============ */
+const stage = document.getElementById("stage");
+
+function render(){
+  renderRail();
+  renderScore();
+  if (!cur){ next(); return; }
+  drawCard();
+}
+
+function renderRail(){
+  const rail = document.getElementById("rail");
+  rail.innerHTML = MODULES.map(m => {
+    const qs = BANK.filter(q => q.m === m.k);
+    const done = qs.filter(q => mastered(q.id)).length;
+    const pct = qs.length ? Math.round(done / qs.length * 100) : 0;
+    return '<button class="seg ' + m.k + '" data-m="' + m.k + '" aria-pressed="' + (scope === m.k) + '">' +
+      '<span class="ord">' + m.ord + '</span>' +
+      '<span class="nm">' + m.ca + '</span>' +
+      '<span class="ct">' + done + '/' + qs.length + '</span>' +
+      '<span class="fill-bg"></span><span class="fill" style="width:' + pct + '%"></span>' +
+    '</button>';
+  }).join("");
+  rail.querySelectorAll(".seg").forEach(b => b.onclick = () => {
+    scope = (scope === b.dataset.m) ? "all" : b.dataset.m;
+    cur = null; render();
+  });
+}
+
+function renderScore(){
+  const total = BANK.length, done = BANK.filter(q => mastered(q.id)).length;
+  document.getElementById("score").innerHTML =
+    (sessionSeen ? '<b>' + sessionRight + '</b>/' + sessionSeen + ' this run &nbsp;·&nbsp; ' : '') +
+    '<b>' + done + '</b>/' + total + ' mastered';
+  document.getElementById("critBtn").setAttribute("aria-pressed", filter === "crit");
+  document.getElementById("contestedBtn").setAttribute("aria-pressed", filter === "contested");
+  document.getElementById("weakBtn").setAttribute("aria-pressed", filter === "weak");
+}
+
+function next(){
+  if (!queue.length) build();
+  if (!queue.length){ drawDone(); return; }
+  cur = queue.shift();
+  answered = false;
+  const s = st(cur.id);
+  const stem = cur.qs ? cur.qs[s.seen % cur.qs.length] : cur.q;
+  curOpts = cur.o.map((o, i) => ({t:o.t, ok:i === 0}));
+  for (let i = curOpts.length - 1; i > 0; i--){ const j = (Math.random() * (i + 1)) | 0; [curOpts[i], curOpts[j]] = [curOpts[j], curOpts[i]]; }
+  cur._stem = stem;
+  drawCard();
+}
+
+function drawCard(){
+  const m = MODULES.find(x => x.k === cur.m);
+  const s = st(cur.id);
+  const left = queue.length + 1;
+  stage.innerHTML =
+  '<article class="card ' + cur.m + '">' +
+    '<div class="cardtop">' +
+      '<span class="eyebrow">' + m.ord + ' · ' + m.ca + '</span>' +
+      (cur.crit ? '<span class="tag">Red flag</span>' : '') +
+      (s.miss > 0 && !mastered(cur.id) ? '<span class="tag rep">Missed before</span>' : '') +
+      '<span class="qno mono">' + left + ' left</span>' +
+    '</div>' +
+    '<h2 class="q">' + cur._stem + '</h2>' +
+    '<div class="opts" id="opts">' +
+      curOpts.map((o, i) =>
+        '<button class="opt" data-i="' + i + '"><span class="k">' + "ABCD"[i] + '</span><span>' + o.t + '</span></button>'
+      ).join("") +
+    '</div>' +
+    '<div id="fb"></div>' +
+  '</article>';
+  document.querySelectorAll(".opt").forEach(b => b.onclick = () => pick(+b.dataset.i));
+}
+
+function pick(i){
+  if (answered) return;
+  answered = true;
+  wasRight = curOpts[i].ok;
+  const s = st(cur.id);
+  s.seen++;
+  if (wasRight){ s.s++; sessionRight++; } else { s.s = 0; s.miss++; }
+  sessionSeen++;
+  save();
+
+  document.querySelectorAll(".opt").forEach((b, j) => {
+    b.disabled = true;
+    if (curOpts[j].ok){ b.classList.add("right"); b.insertAdjacentHTML("beforeend", '<span class="mk">correct</span>'); }
+    else if (j === i){ b.classList.add("wrong"); b.insertAdjacentHTML("beforeend", '<span class="mk">your answer</span>'); }
+    else b.classList.add("dim");
+  });
+
+  const m2 = mastered(cur.id);
+  document.getElementById("fb").innerHTML =
+    '<div class="fb">' +
+      '<p class="verdict ' + (wasRight ? "y" : "n") + '">' +
+        (wasRight ? (m2 ? "Correct — mastered" : "Correct — one more to lock it in") : "Wrong — this one comes back") +
+      '</p>' +
+      '<p class="why">' + cur.w + '</p>' +
+      (cur.ev ?
+        '<div class="ev">' +
+          '<div class="evh">' +
+            '<span class="evs">Independent evidence · ' + cur.ev.s + '</span>' +
+            (cur.ev.c ? '<span class="evc">Guidelines disagree</span>' : '') +
+          '</div>' +
+          '<p>' + cur.ev.t + '</p>' +
+        '</div>' : '') +
+      '<div class="act">' +
+        '<button class="btn" id="nextBtn">Next</button>' +
+        (wasRight ? "" : '<button class="btn ghost" id="againBtn">Ask me again now</button>') +
+        '<span class="hint">↵ or space</span>' +
+      '</div>' +
+    '</div>';
+
+  if (!wasRight) queue.splice(Math.min(3, queue.length), 0, cur);
+  document.getElementById("nextBtn").onclick = next;
+  const ag = document.getElementById("againBtn");
+  if (ag) ag.onclick = () => { queue = queue.filter(q => q !== cur); queue.unshift(cur); next(); };
+  renderRail(); renderScore();
+  document.getElementById("nextBtn").focus();
+}
+
+function drawDone(){
+  const p = pool();
+  const label = filter === "crit" ? "every red flag" : filter === "contested" ? "every contested topic" : filter === "weak" ? "your weak spots" :
+                scope === "all" ? "all six phases" : MODULES.find(x => x.k === scope).ca;
+  const acc = sessionSeen ? Math.round(sessionRight / sessionSeen * 100) : 0;
+  const weak = BANK.filter(q => st(q.id).miss > 0).length;
+  stage.innerHTML =
+  '<article class="card done">' +
+    '<h2>Clear — ' + label + '</h2>' +
+    '<p>Every question in this set answered correctly twice in a row. Come back in a few days and run it again; the ones you got wrong today are the ones that will slip first.</p>' +
+    '<div class="statgrid">' +
+      '<div class="stat"><div class="v mono">' + sessionRight + '/' + sessionSeen + '</div><div class="l">This run</div></div>' +
+      '<div class="stat"><div class="v mono">' + acc + '%</div><div class="l">Accuracy</div></div>' +
+      '<div class="stat"><div class="v mono">' + BANK.filter(q => mastered(q.id)).length + '/' + BANK.length + '</div><div class="l">Mastered</div></div>' +
+      '<div class="stat"><div class="v mono">' + weak + '</div><div class="l">Ever missed</div></div>' +
+    '</div>' +
+    '<div class="act" style="border:0;padding:0;margin:0">' +
+      '<button class="btn" id="againAll">Run it again</button>' +
+      '<button class="btn ghost" id="goCrit">Red flags only</button>' +
+    '</div>' +
+  '</article>';
+  document.getElementById("againAll").onclick = () => {
+    p.forEach(q => { st(q.id).s = 0; });
+    sessionSeen = sessionRight = 0; save(); cur = null; render();
+  };
+  document.getElementById("goCrit").onclick = () => {
+    filter = "crit"; scope = "all";
+    BANK.filter(q => q.crit).forEach(q => { st(q.id).s = 0; });
+    sessionSeen = sessionRight = 0; save(); cur = null; build(); render();
+  };
+}
+
+/* ============ CONTROLS ============ */
+document.getElementById("critBtn").onclick = () => {
+  filter = filter === "crit" ? null : "crit"; cur = null; build(); render();
+};
+document.getElementById("contestedBtn").onclick = () => {
+  filter = filter === "contested" ? null : "contested"; cur = null; build(); render();
+};
+document.getElementById("weakBtn").onclick = () => {
+  filter = filter === "weak" ? null : "weak"; cur = null; build(); render();
+};
+document.getElementById("resetBtn").onclick = () => {
+  stats = {}; sessionSeen = sessionRight = 0; cur = null; save(); build(); render();
+};
+
+document.addEventListener("keydown", e => {
+  if (document.getElementById("drawer").classList.contains("on")) return;
+  if (!answered){
+    if (!curOpts) return;
+    const k = e.key.toUpperCase();
+    let i = -1;
+    if ("1234".includes(e.key)) i = +e.key - 1;
+    if ("ABCD".includes(k)) i = "ABCD".indexOf(k);
+    if (i >= 0 && i < curOpts.length){ e.preventDefault(); pick(i); }
+  } else if (e.key === "Enter" || e.key === " "){
+    e.preventDefault(); next();
+  }
+});
+
+/* ============ DRAWER ============ */
+const drawer = document.getElementById("drawer"), scrim = document.getElementById("scrim");
+let tab = "ref";
+function openD(){ drawer.classList.add("on"); scrim.classList.add("on"); drawer.setAttribute("aria-hidden","false"); drawD(); }
+function closeD(){ drawer.classList.remove("on"); scrim.classList.remove("on"); drawer.setAttribute("aria-hidden","true"); }
+document.getElementById("fab").onclick = openD;
+document.getElementById("dclose").onclick = closeD;
+scrim.onclick = closeD;
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeD(); });
+document.getElementById("tabRef").onclick = () => { tab = "ref"; drawD(); };
+document.getElementById("tabTimer").onclick = () => { tab = "timer"; drawD(); };
+
+function drawD(){
+  document.getElementById("tabRef").setAttribute("aria-pressed", tab === "ref");
+  document.getElementById("tabTimer").setAttribute("aria-pressed", tab === "timer");
+  document.getElementById("dtitle").textContent = tab === "ref" ? "Reference" : "Contractions";
+  const b = document.getElementById("dbody");
+  if (tab === "ref"){
+    b.innerHTML = REF.map(s =>
+      '<section class="ref"><h4>' + s.h + '</h4><ul>' + s.i.map(x => '<li><span>' + x + '</span></li>').join("") + '</ul></section>'
+    ).join("");
+  } else {
+    b.innerHTML =
+      '<button class="tbtn" id="tb">Start contraction</button>' +
+      '<div class="tread">' +
+        '<div><div class="v" id="tFreq">—</div><div class="l">Every</div></div>' +
+        '<div><div class="v" id="tDur">—</div><div class="l">Lasting</div></div>' +
+      '</div>' +
+      '<div class="tverd" id="tVerd">Tap when a contraction starts, tap again when it ends. Averages use the last 5.</div>' +
+      '<table class="tlog"><thead><tr><th>#</th><th>Started</th><th>Length</th><th>Gap</th></tr></thead><tbody id="tBody"></tbody></table>' +
+      '<div class="act" style="border:0"><button class="btn ghost" id="tClear">Clear log</button></div>';
+    document.getElementById("tb").onclick = tap;
+    document.getElementById("tClear").onclick = () => { log = []; saveLog(); drawD(); };
+    paintTimer();
+  }
+}
+
+/* ---- contraction timer ---- */
+let log = [];
+try { log = JSON.parse(localStorage.getItem("parto.ctx") || "[]"); } catch(e){ log = []; }
+let running = null;
+function saveLog(){ try { localStorage.setItem("parto.ctx", JSON.stringify(log.slice(-40))); } catch(e){} }
+function tap(){
+  if (running === null){ running = Date.now(); }
+  else { log.push({s: running, d: Date.now() - running}); running = null; saveLog(); }
+  paintTimer();
+}
+function fmt(ms){ const s = Math.round(ms / 1000); return s < 60 ? s + "s" : Math.floor(s / 60) + "m " + String(s % 60).padStart(2,"0") + "s"; }
+function paintTimer(){
+  const tb = document.getElementById("tb"); if (!tb) return;
+  tb.textContent = running === null ? "Start contraction" : "End contraction";
+  tb.classList.toggle("live", running !== null);
+
+  const last = log.slice(-6).reverse();
+  document.getElementById("tBody").innerHTML = last.map((c, i) => {
+    const idx = log.length - i;
+    const prev = log[log.length - i - 2];
+    const gap = prev ? fmt(c.s - prev.s) : "—";
+    const t = new Date(c.s);
+    return '<tr><td>' + idx + '</td><td>' + String(t.getHours()).padStart(2,"0") + ":" + String(t.getMinutes()).padStart(2,"0") +
+           '</td><td>' + fmt(c.d) + '</td><td>' + gap + '</td></tr>';
+  }).join("") || '<tr><td colspan="4" style="color:var(--ink3)">No contractions logged</td></tr>';
+
+  const recent = log.slice(-5);
+  const gaps = []; for (let i = 1; i < recent.length; i++) gaps.push(recent[i].s - recent[i-1].s);
+  const avgGap = gaps.length ? gaps.reduce((a,b) => a+b, 0) / gaps.length : null;
+  const avgDur = recent.length ? recent.reduce((a,c) => a + c.d, 0) / recent.length : null;
+  document.getElementById("tFreq").textContent = avgGap ? fmt(avgGap) : "—";
+  document.getElementById("tDur").textContent = avgDur ? fmt(avgDur) : "—";
+
+  const v = document.getElementById("tVerd");
+  if (gaps.length < 3){ v.className = "tverd"; v.textContent = "Log at least 4 contractions for a reliable average."; return; }
+  const spread = Math.max.apply(null, gaps) - Math.min.apply(null, gaps);
+  if (avgGap <= 5.5 * 60000 && avgDur >= 45000 && spread < 3 * 60000){
+    v.className = "tverd go";
+    v.innerHTML = "Pattern meets 5–1–1. Call the hospital now — and remember this is a general threshold, not your unit's.";
+  } else {
+    v.className = "tverd";
+    v.innerHTML = "Not at 5–1–1 yet. Keep her fed, hydrated and resting — and re-time after the next change. Go in sooner regardless for reduced movements, meconium, bleeding, fever, or pre-eclampsia signs.";
+  }
+}
+
+/* ============ GO ============ */
+load();
+build();
+render();
+
+/* ---- install hint: iOS Safari, not yet on the home screen ---- */
+(function(){
+  const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const standalone = window.navigator.standalone === true ||
+                     window.matchMedia("(display-mode: standalone)").matches;
+  let dismissed = false;
+  try { dismissed = localStorage.getItem("parto.a2hs") === "1"; } catch(e){}
+  if (!iOS || standalone || dismissed) return;
+  const el = document.createElement("div");
+  el.className = "a2hs";
+  el.innerHTML = '<p>Install this: tap <b>Share</b> below, then <b>Add to Home Screen</b>. ' +
+                 'It then works with no signal.</p><button id="a2hsX" aria-label="Dismiss">Got it</button>';
+  document.body.appendChild(el);
+  document.getElementById("a2hsX").onclick = () => {
+    try { localStorage.setItem("parto.a2hs","1"); } catch(e){}
+    el.remove();
+  };
+})();
+
+/* ---- offline cache ---- */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));
+}
+</script>
+
+</body>
+</html>

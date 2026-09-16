@@ -2,7 +2,7 @@
    App shell is precached; fonts are cached on first online run.
    Bump CACHE when index.html changes so the update actually lands. */
 
-const CACHE = "parts-v3";
+const CACHE = "parts-v4";
 
 const SHELL = [
   "./",

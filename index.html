@@ -359,6 +359,8 @@ body{-webkit-text-size-adjust:100%; overscroll-behavior-y:contain}
   background:transparent; color:var(--paper); border:1px solid var(--paper);
   border-radius:3px; padding:7px 11px; cursor:pointer;
 }
+.a2hs button#a2hsGo{background:var(--paper); color:var(--ink)}
+.a2hs button#a2hsX{border-color:transparent; opacity:.72}
 </style>
 
 </head>
@@ -1764,23 +1766,55 @@ function paintTimer(){
 load();
 render();
 
-/* ---- install hint: iOS Safari, not yet on the home screen ---- */
+/* ---- install prompt: a real button on Android, instructions on iOS ---- */
 (function(){
-  const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const standalone = window.navigator.standalone === true ||
                      window.matchMedia("(display-mode: standalone)").matches;
+  if (standalone) return;
   let dismissed = false;
   try { dismissed = localStorage.getItem("parto.a2hs") === "1"; } catch(e){}
-  if (!iOS || standalone || dismissed) return;
-  const el = document.createElement("div");
-  el.className = "a2hs";
-  el.innerHTML = '<p>Install this: tap <b>Share</b> below, then <b>Add to Home Screen</b>. ' +
-                 'It then works with no signal.</p><button id="a2hsX" aria-label="Dismiss">Got it</button>';
-  document.body.appendChild(el);
-  document.getElementById("a2hsX").onclick = () => {
+  if (dismissed) return;
+
+  let deferred = null, shown = false;
+
+  function banner(html, installable){
+    if (shown) return;
+    shown = true;
+    const el = document.createElement("div");
+    el.className = "a2hs";
+    el.innerHTML = '<p>' + html + '</p>' +
+      (installable ? '<button id="a2hsGo">Install</button>' : '') +
+      '<button id="a2hsX">' + (installable ? 'Not now' : 'Got it') + '</button>';
+    document.body.appendChild(el);
+    document.getElementById("a2hsX").onclick = () => {
+      try { localStorage.setItem("parto.a2hs","1"); } catch(e){}
+      el.remove();
+    };
+    const go = document.getElementById("a2hsGo");
+    if (go) go.onclick = () => {
+      el.remove();
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.then(() => { deferred = null; });
+    };
+  }
+
+  // Android / desktop Chrome: capture the event and offer our own button
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    deferred = e;
+    banner("Install this so it works with no signal.", true);
+  });
+
+  // iOS has no such event: Safari can only be told what to tap
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    banner("Install this: tap <b>Share</b> below, then <b>Add to Home Screen</b>. " +
+           "It then works with no signal.", false);
+  }
+
+  window.addEventListener("appinstalled", () => {
     try { localStorage.setItem("parto.a2hs","1"); } catch(e){}
-    el.remove();
-  };
+  });
 })();
 
 /* ---- offline cache ---- */
